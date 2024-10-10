@@ -12,13 +12,13 @@ namespace NGCCorp.TailwindCSS
       string remRegex = @"(\d*\.?\d+)rem";
 
       // Read the Tailwind config file
-      string configFile = File.ReadAllText(TailwindBuilder.tailwindConfigFile);
+      string configFile = File.ReadAllText(Settings.tailwindConfigFile);
 
       // Use Regex to replace all rem values with px values
       string updatedConfigFile = Regex.Replace(configFile, remRegex, new MatchEvaluator(RemToPx));
 
       // Write the updated content back to the Tailwind config file
-      File.WriteAllText(TailwindBuilder.tailwindConfigUnityFile, updatedConfigFile);
+      File.WriteAllText(Settings.tailwindConfigUnityFile, updatedConfigFile);
     }
 
     // This function takes a rem match and converts it to px

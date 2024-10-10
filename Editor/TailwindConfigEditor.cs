@@ -14,7 +14,7 @@ namespace NGCCorp.TailwindCSS
     public static bool ValidateShowWindow()
     {
       // Disable the menu if the config file does not exist
-      return File.Exists(TailwindBuilder.tailwindConfigFile);
+      return File.Exists(Settings.tailwindConfigFile);
     }
 
     [MenuItem("Tools/Tailwind/Configure Tailwind")]
@@ -93,7 +93,7 @@ namespace NGCCorp.TailwindCSS
         return;
       }
 
-      string configFile = TailwindBuilder.tailwindConfigFile;
+      string configFile = Settings.tailwindConfigFile;
 
       if (!File.Exists(configFile))
       {

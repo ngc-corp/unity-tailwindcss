@@ -8,28 +8,17 @@ namespace NGCCorp.TailwindCSS
 {
   public class TailwindBuilder : EditorWindow
   {
-    public static string CombinePaths(params string[] paths)
-    {
-      return Path.Combine(paths).Replace("\\", "/");
-    }
-
-    public static string tailwindPath = CombinePaths(Application.dataPath, "TailwindCSS");
-    public static string tailwindStylesFile = CombinePaths(Path.GetFullPath("Packages/com.ngc-corp.unity-tailwindcss"), "styles.css");
-    public static string tailwindBuildPath = CombinePaths(tailwindPath, "tailwind.uss");
-    public static string tailwindConfigFile = CombinePaths(tailwindPath, "tailwind.config.js");
-    public static string tailwindConfigUnityFile = CombinePaths(tailwindPath, "tailwind-unity.config.js");
+    public static string[] commandCheckNodeWindows = { "cmd.exe", "/c node -v" };
+    public static string[] commandCheckNodeMacOS = { "/bin/bash", "-c \"node -v\"" };
+    public static string[] commandCheckNodeLinux = { "/bin/bash", "-c \"node -v\"" };
 
     public static string[] commandInitWindows = { "cmd.exe", $"/c npx --yes tailwindcss init --full" };
     public static string[] commandInitMacOS = { "/bin/bash", $"-c \"npx --yes tailwindcss init --full\"" };
     public static string[] commandInitLinux = { "/bin/bash", $"-c \"npx --yes tailwindcss init --full\"" };
 
-    public static string[] commandBuildWindows = { "cmd.exe", $"/c npx --yes tailwindcss -i \"{tailwindStylesFile}\" -o \"{tailwindBuildPath}\" -c \"{tailwindConfigUnityFile}\"" };
-    public static string[] commandBuildMacOS = { "/bin/bash", $"-c \"npx --yes tailwindcss -i '{tailwindStylesFile}' -o '{tailwindBuildPath}' -c '{tailwindConfigUnityFile}'\"" };
-    public static string[] commandBuildLinux = { "/bin/bash", $"-c \"npx --yes tailwindcss -i '{tailwindStylesFile}' -o '{tailwindBuildPath}' -c '{tailwindConfigUnityFile}'\"" };
-
-    public static string[] commandCheckNodeWindows = { "cmd.exe", "/c node -v" };
-    public static string[] commandCheckNodeMacOS = { "/bin/bash", "-c \"node -v\"" };
-    public static string[] commandCheckNodeLinux = { "/bin/bash", "-c \"node -v\"" };
+    public static string[] commandBuildWindows = { "cmd.exe", $"/c npx --yes tailwindcss -i \"{Settings.tailwindStylesFile}\" -o \"{Settings.tailwindBuildPath}\" -c \"{Settings.tailwindConfigUnityFile}\"" };
+    public static string[] commandBuildMacOS = { "/bin/bash", $"-c \"npx --yes tailwindcss -i '{Settings.tailwindStylesFile}' -o '{Settings.tailwindBuildPath}' -c '{Settings.tailwindConfigUnityFile}'\"" };
+    public static string[] commandBuildLinux = { "/bin/bash", $"-c \"npx --yes tailwindcss -i '{Settings.tailwindStylesFile}' -o '{Settings.tailwindBuildPath}' -c '{Settings.tailwindConfigUnityFile}'\"" };
 
     [MenuItem("Tools/Tailwind/Init Tailwind", validate = true)]
     public static bool ValidateShowWindow()
@@ -51,11 +40,12 @@ namespace NGCCorp.TailwindCSS
 
       EnsureTailwindPathExists();
       InitTailwind();
+      CorePlugins.AddCorePlugins();
       BuildCSS();
     }
 
     public static bool HasTailwindConfig() {
-      return File.Exists(tailwindConfigFile);
+      return File.Exists(Settings.tailwindConfigFile);
     }
 
     public static void BuildCSS() {
@@ -85,7 +75,7 @@ namespace NGCCorp.TailwindCSS
 
     public static void InitTailwind()
     {
-      Logger.LogInfo($"Init Tailwind in {tailwindPath}");
+      Logger.LogInfo($"Init Tailwind in {Settings.tailwindPath}");
 
       string[] command = SystemInfo.operatingSystemFamily switch
       {
@@ -96,7 +86,7 @@ namespace NGCCorp.TailwindCSS
       };
 
       // Set up the process start information
-      ProcessStartInfo processInfo = GetProcessStartInfo(command, tailwindPath);
+      ProcessStartInfo processInfo = GetProcessStartInfo(command, Settings.tailwindPath);
 
       // Start the process
       RunProcess(processInfo);
@@ -104,9 +94,9 @@ namespace NGCCorp.TailwindCSS
 
     public static void EnsureTailwindPathExists()
     {
-      if (!Directory.Exists(tailwindPath))
+      if (!Directory.Exists(Settings.tailwindPath))
       {
-        Directory.CreateDirectory(tailwindPath);
+        Directory.CreateDirectory(Settings.tailwindPath);
       }
     }
 

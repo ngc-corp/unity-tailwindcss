@@ -54,7 +54,8 @@ namespace NGCCorp.TailwindCSS
         return;
       }
 
-      RemToPxConverter.Convert();
+      Converter.ConvertRem();
+      Converter.ConvertEm();
 
       string[] command = SystemInfo.operatingSystemFamily switch
       {

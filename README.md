@@ -14,7 +14,7 @@ Add the Git Repository to Unity: Add the package to Unity’s Package Manager by
 ```json
 {
   "dependencies": {
-    "com.ngc-corp.unity-tailwindcss": "https://github.com/ngc-corp/unity-tailwindcss"
+    "com.ngc-corp.unity-tailwindcss": "git+https://github.com/ngc-corp/unity-tailwindcss.git"
   }
 }
 ```

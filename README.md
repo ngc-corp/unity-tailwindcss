@@ -23,7 +23,7 @@ Add the Git Repository to Unity: Add the package to Unity’s Package Manager by
 
 Navigate to `Tools/Tailwind/Init Tailwind`.
 
-This will create a Tailwind folder in your Assets directory with the necessary files. However, since no paths are being monitored yet, the tailwind.uss file will remain empty.
+This will create a TailwindCSS folder in your Assets directory with the necessary files. However, since no paths are being monitored yet, the tailwind.uss file will remain empty.
 
 ## Configure monitored paths
 

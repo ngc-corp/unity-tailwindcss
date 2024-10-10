@@ -13,8 +13,8 @@ namespace NGCCorp.TailwindCSS
       return Path.Combine(paths).Replace("\\", "/");
     }
 
-    public static string tailwindPath = CombinePaths(Application.dataPath, "Tailwind");
-    public static string tailwindStylesFile = CombinePaths(Application.dataPath, "TailwindCSS", "styles.css");
+    public static string tailwindPath = CombinePaths(Application.dataPath, "TailwindCSS");
+    public static string tailwindStylesFile = CombinePaths(Path.GetFullPath("Packages/com.ngc-corp.unity-tailwindcss"), "styles.css");
     public static string tailwindBuildPath = CombinePaths(tailwindPath, "tailwind.uss");
     public static string tailwindConfigFile = CombinePaths(tailwindPath, "tailwind.config.js");
     public static string tailwindConfigUnityFile = CombinePaths(tailwindPath, "tailwind-unity.config.js");

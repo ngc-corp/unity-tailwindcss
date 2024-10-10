@@ -9,6 +9,7 @@
     "email": "unity@ngc-corp.com",
     "url": "https://ngc-corp.com"
   },
+  "license": "MIT",
   "keywords": [
     "Tailwind",
     "Tailwind CSS",

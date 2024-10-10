@@ -9,7 +9,7 @@ namespace NGCCorp.TailwindCSS
 
     public static string tailwindPath = CombinePaths(Application.dataPath, "TailwindCSS");
     public static string tailwindStylesFile = CombinePaths(Path.GetFullPath("Packages/com.ngc-corp.unity-tailwindcss"), "styles.css");
-    public static string tailwindCorePluginsFile = CombinePaths(Path.GetFullPath("Packages/com.ngc-corp.unity-tailwindcss"), "core-plugins.js");
+    public static string tailwindCorePluginsFile = CombinePaths(Path.GetFullPath("Packages/com.ngc-corp.unity-tailwindcss"), "core-plugins.txt");
 
     // public static string tailwindStylesFile = CombinePaths(Application.dataPath, "unity-tailwindcss", "styles.css");
     // public static string tailwindCorePluginsFile = CombinePaths(Application.dataPath, "unity-tailwindcss", "core-plugins.txt");

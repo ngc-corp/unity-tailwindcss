@@ -19,17 +19,15 @@ jobs:
         package-path: 'a/unity-tailwindcss.unitypackage'
         include-files: metaList
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: a
         name: unitypackage
 
-    # Create or attach to a release and upload the artifact
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v4
+    # Create a GitHub release and upload the asset
+    - name: Create Release and Upload Asset
+      uses: softprops/action-gh-release@v2
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        release_tag: ${{ github.ref }}
-        asset_path: ./a/unity-tailwindcss.unitypackage
-        asset_name: unity-tailwindcss.unitypackage
-        asset_content_type: application/octet-stream
+        files: ./a//unity-tailwindcss.unitypackage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

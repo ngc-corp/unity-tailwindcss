@@ -6,7 +6,7 @@ jobs:
   build-and-upload:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - run: |
         find . -maxdepth 1 -name '*.meta' > metaList
@@ -24,13 +24,12 @@ jobs:
         path: a
         name: unitypackage
 
-    # Upload the unitypackage to the release
+    # Create or attach to a release and upload the artifact
     - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: actions/upload-release-asset@v4
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        release_tag: ${{ github.ref }}
         asset_path: ./a/unity-tailwindcss.unitypackage
         asset_name: unity-tailwindcss.unitypackage
         asset_content_type: application/octet-stream

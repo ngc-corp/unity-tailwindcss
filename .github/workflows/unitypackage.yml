@@ -1,6 +1,8 @@
 name: Create Unity Package
 
-on: release
+on:
+  release:
+    types: [published]
 
 jobs:
   build-and-upload:
@@ -12,11 +14,16 @@ jobs:
         echo "Packages/TailwindCSS.meta" > metaList
         find Packages/TailwindCSS/ -name \*.meta >> metaList
 
+    # Capture the tag name from the release event
+    - name: Get Tag Name
+      id: get_tag
+      run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+
     - run: mkdir a
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
-        package-path: 'a/TailwindCSS.unitypackage'
+        package-path: 'a/TailwindCSS-${{ steps.get_tag.outputs.tag }}.unitypackage'
         include-files: metaList
 
     - uses: actions/upload-artifact@v4
@@ -28,6 +35,6 @@ jobs:
     - name: Create Release and Upload Asset
       uses: softprops/action-gh-release@v2
       with:
-        files: ./a//TailwindCSS.unitypackage
+        files: ./a/TailwindCSS-${{ steps.get_tag.outputs.tag }}.unitypackage
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

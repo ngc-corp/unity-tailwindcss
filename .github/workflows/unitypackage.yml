@@ -3,22 +3,34 @@ name: Create Unity Package
 on: release
 
 jobs:
-  echo:
+  build-and-upload:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: |
-        # Start by echoing meta files from the root directory
-        find . -maxdepth 1 -name '*.meta' > metaList
 
-        # Include all .meta files from the docs, Editor, and Tailwind directories
+    - run: |
+        find . -maxdepth 1 -name '*.meta' > metaList
         find docs/ Editor/ Tailwind/ -name '*.meta' >> metaList
+
     - run: mkdir a
+
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
-        package-path: 'a/unit-tailwindcss.unitypackage'
+        package-path: 'a/unity-tailwindcss.unitypackage'
         include-files: metaList
-    - uses: actions/upload-artifact@master
+
+    - uses: actions/upload-artifact@v2
       with:
         path: a
-        name: package
+        name: unitypackage
+
+    # Upload the unitypackage to the release
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./a/unity-tailwindcss.unitypackage
+        asset_name: unity-tailwindcss.unitypackage
+        asset_content_type: application/octet-stream

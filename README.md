@@ -17,12 +17,18 @@ If you've found my projects helpful and want to support future developments, con
 
 ## Installation
 
+### Option 1
+
+Go to the Releases section on GitHub and download the Unity package. Then, with your project open, simply run the file to install it.
+
+### Option 2
+
 Add the Git Repository to Unity: Add the package to Unity’s Package Manager by modifying the Packages/manifest.json:
 
 ```json
 {
   "dependencies": {
-    "com.ngc-corp.unity-tailwindcss": "git+https://github.com/ngc-corp/unity-tailwindcss.git"
+    "com.ngc-corp.unity-tailwindcss": "git+https://github.com/ngc-corp/unity-tailwindcss.git?path=/Packages/com.ngc-corp.unity-tailwindcss"
   }
 }
 ```

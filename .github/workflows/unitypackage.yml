@@ -10,13 +10,13 @@ jobs:
 
     - run: |
         find . -maxdepth 1 -name '*.meta' > metaList
-        find docs/ Editor/ Tailwind/ -name '*.meta' >> metaList
+        find Documentation/ Editor/ Tailwind/ -name '*.meta' >> metaList
 
     - run: mkdir a
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
-        package-path: 'a/unity-tailwindcss.unitypackage'
+        package-path: 'a/TailwindCSS.unitypackage'
         include-files: metaList
 
     - uses: actions/upload-artifact@v4
@@ -28,6 +28,6 @@ jobs:
     - name: Create Release and Upload Asset
       uses: softprops/action-gh-release@v2
       with:
-        files: ./a//unity-tailwindcss.unitypackage
+        files: ./a//TailwindCSS.unitypackage
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

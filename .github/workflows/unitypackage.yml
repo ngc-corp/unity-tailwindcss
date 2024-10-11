@@ -8,12 +8,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        echo "Assets/Voiceer.meta" > metaList
-        find Assets/Voiceer/ -name \*.meta >> metaList
+        # Start by echoing meta files from the root directory
+        find . -maxdepth 1 -name '*.meta' > metaList
+
+        # Include all .meta files from the docs, Editor, and Tailwind directories
+        find docs/ Editor/ Tailwind/ -name '*.meta' >> metaList
     - run: mkdir a
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
-        package-path: 'a/output.unitypackage'
+        package-path: 'a/unit-tailwindcss.unitypackage'
         include-files: metaList
     - uses: actions/upload-artifact@master
       with:

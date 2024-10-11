@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "com.ngc-corp.unity-tailwindcss": "git+https://github.com/ngc-corp/unity-tailwindcss.git#Packages/com.ngc-corp.unity-tailwindcss"
+  }
+}

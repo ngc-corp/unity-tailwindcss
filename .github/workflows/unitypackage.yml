@@ -19,7 +19,7 @@ jobs:
         package-path: 'a/unity-tailwindcss.unitypackage'
         include-files: metaList
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         path: a
         name: unitypackage

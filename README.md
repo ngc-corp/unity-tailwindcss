@@ -37,7 +37,7 @@ This will create a TailwindCSS folder in your Assets directory with the necessar
 
 Navigate to `Tools/Tailwind/Configure Tailwind`.
 
-![Tailwind Config Editor](./docs/image.png)
+![Tailwind Config Editor](./Documentation/image.png)
 
 Here, you can set paths to be monitored for changes in `.uxml` and `.cs` files. If any file in these directories changes, tailwind.uss will be rebuilt.
 
@@ -45,7 +45,7 @@ Here, you can set paths to be monitored for changes in `.uxml` and `.cs` files. 
 
 For the final step to use Tailwind classes in Unity, you need to add the `tailwind.uss` stylesheet to your runtime theme, as shown in the screenshot. By default, your theme is located at `UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme`.
 
-![Adding tailwind.uss to your Theme Style Sheet](./docs/image2.png)
+![Adding tailwind.uss to your Theme Style Sheet](./Documentation/image2.png)
 
 ## Core Plugins
 

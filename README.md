@@ -53,6 +53,105 @@ For the final step to use Tailwind classes in Unity, you need to add the `tailwi
 
 ![Adding tailwind.uss to your Theme Style Sheet](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/image2.png)
 
+## Example
+
+Lets asume you have a `Overlay.uxml` and a script `UIOverlay.cs` which adds some buttons for a main menu.
+
+```xml
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:engine="UnityEngine.UIElements"
+  xmlns:editor="UnityEditor.UIElements"
+  noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+  editor-extension-mode="False"
+>
+  <engine:VisualElement name="overlay-wrapper" class="grow justify-center items-center" />
+</engine:UXML>
+```
+
+```csharp
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace Zom {
+  public class UIOverlay : MonoBehaviour {
+    public void Show(Dictionary<string, Action> actions) {
+      UIDocument uIDocument = GetComponent<UIDocument>();
+      VisualElement visualElement = uIDocument.rootVisualElement.Q<VisualElement>("overlay-wrapper");
+
+      foreach (KeyValuePair<string, Action> pair in actions) {
+        Button button = new();
+
+        button.AddToClassList("px-3");
+        button.AddToClassList("py-2");
+        button.AddToClassList("text-white");
+        button.AddToClassList("text-base");
+        button.AddToClassList("rounded-xl");
+        button.AddToClassList("bg-stone-950");
+        button.AddToClassList("border-0");
+
+        button.text = pair.Key;
+        button.RegisterCallback<ClickEvent>(ev => pair.Value());
+
+        visualElement.Add(button);
+      }
+    }
+  }
+}
+```
+
+if these files are under the configured monitored folders, the following USS file will be generated.
+
+```css
+.grow {
+  flex-grow: 1
+}
+
+.items-center {
+  align-items: center
+}
+
+.justify-center {
+  justify-content: center
+}
+
+.rounded-xl {
+  border-radius: 12px
+}
+
+.border-0 {
+  border-width: 0px
+}
+
+.bg-stone-950 {
+  background-color: #0c0a09
+}
+
+.px-3 {
+  padding-left: 12px;
+  padding-right: 12px
+}
+
+.py-2 {
+  padding-top: 8px;
+  padding-bottom: 8px
+}
+
+.text-base {
+  font-size: 16px;
+  line-height: 24px
+}
+
+.text-white {
+  color: #fff
+}
+```
+
+which results in
+
+![Example Main Menu](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result.png)
+
 ## Core Plugins
 
 USS supports these core plugins out of the box. However, there are some limitations with certain plugins. For example, `border-e-green-800` won't work, but `border-green-800` will. Currently, there are no converters for unsupported core plugins, but this is subject to change as the library evolves during its use in an active project. If you need a specific core plugin for your project, feel free to open an issue, and I'll do my best to make it compatible.

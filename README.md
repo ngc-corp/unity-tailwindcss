@@ -91,6 +91,14 @@ namespace Zom {
         button.AddToClassList("bg-stone-950");
         button.AddToClassList("border-0");
 
+        // Text alignment is implemented through a custom plugin because Unity uses a unique format for text alignment (-unity-text-align)
+        button.AddToClassList("text-middle-center");
+
+        // Unity doesn't support ":" as the default separator, so we use "_" instead.
+        // For example, use `hover_bg-white` instead of `hover:bg-white`.
+        button.AddToClassList("hover_bg-white");
+        button.AddToClassList("hover_text-black");
+
         button.text = pair.Key;
         button.RegisterCallback<ClickEvent>(ev => pair.Value());
 
@@ -101,52 +109,7 @@ namespace Zom {
 }
 ```
 
-If these files are within the configured monitored folders, the following USS file will be generated.
-
-```css
-.grow {
-  flex-grow: 1
-}
-
-.items-center {
-  align-items: center
-}
-
-.justify-center {
-  justify-content: center
-}
-
-.rounded-xl {
-  border-radius: 12px
-}
-
-.border-0 {
-  border-width: 0px
-}
-
-.bg-stone-950 {
-  background-color: #0c0a09
-}
-
-.px-3 {
-  padding-left: 12px;
-  padding-right: 12px
-}
-
-.py-2 {
-  padding-top: 8px;
-  padding-bottom: 8px
-}
-
-.text-base {
-  font-size: 16px;
-  line-height: 24px
-}
-
-.text-white {
-  color: #fff
-}
-```
+If these files are within the configured monitored folders, the USS file will be generated in `Assets/TailwindCSS/tailwind.uss`.
 
 Which results in the following UI.
 
@@ -155,6 +118,8 @@ Which results in the following UI.
 ## Core Plugins
 
 USS supports these core plugins out of the box. However, there are some limitations with certain plugins. For example, `border-e-green-800` won't work, but `border-green-800` will. Currently, there are no converters for unsupported core plugins, but this is subject to change as the library evolves during its use in an active project. If you need a specific core plugin for your project, feel free to open an issue, and I'll do my best to make it compatible.
+
+Properties marked as custom differ from the default Tailwind behavior. All custom properties are explained in the example.
 
 | Property                 | Supported |
 |--------------------------|-----------|
@@ -309,7 +274,7 @@ USS supports these core plugins out of the box. However, there are some limitati
 | stroke                   | ❌         |
 | strokeWidth              | ❌         |
 | tableLayout              | ❌         |
-| textAlign                | ✅         |
+| textAlign (custom)       | ✅         |
 | textColor                | ✅         |
 | textDecoration           | ❌         |
 | textDecorationColor      | ❌         |

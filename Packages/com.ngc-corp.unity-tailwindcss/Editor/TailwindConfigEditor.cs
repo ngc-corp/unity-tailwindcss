@@ -14,7 +14,7 @@ namespace NGCCorp.TailwindCSS
     public static bool ValidateShowWindow()
     {
       // Disable the menu if the config file does not exist
-      return File.Exists(Settings.tailwindConfigFile);
+      return File.Exists(Settings.assetsConfigFile);
     }
 
     [MenuItem("Tools/Tailwind/Configure Tailwind")]
@@ -93,7 +93,7 @@ namespace NGCCorp.TailwindCSS
         return;
       }
 
-      string configFile = Settings.tailwindConfigFile;
+      string configFile = Settings.assetsConfigFile;
 
       if (!File.Exists(configFile))
       {
@@ -106,7 +106,8 @@ namespace NGCCorp.TailwindCSS
 
       foreach (var path in uxmlFolderPaths)
       {
-        contentPaths.Add($"\"{path.Replace("\\", "/")}/**/*.{{uxml,cs}}\"");
+        string absoultePath = Path.GetFullPath(path);
+        contentPaths.Add($"\"{absoultePath.Replace("\\", "/")}/**/*.{{uxml,cs}}\"");
       }
 
       string newContent = $"content: [{string.Join(", ", contentPaths)}],";

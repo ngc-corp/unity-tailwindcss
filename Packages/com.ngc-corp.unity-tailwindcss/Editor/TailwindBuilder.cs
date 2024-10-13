@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,13 +13,17 @@ namespace NGCCorp.TailwindCSS
     public static string[] commandCheckNodeMacOS = { "/bin/bash", "-c \"node -v\"" };
     public static string[] commandCheckNodeLinux = { "/bin/bash", "-c \"node -v\"" };
 
-    public static string[] commandInitWindows = { "cmd.exe", $"/c npx --yes tailwindcss init --full" };
-    public static string[] commandInitMacOS = { "/bin/bash", $"-c \"npx --yes tailwindcss init --full\"" };
-    public static string[] commandInitLinux = { "/bin/bash", $"-c \"npx --yes tailwindcss init --full\"" };
+    public static string[] commandNPMInstallNodeWindows = { "cmd.exe", "/c npm install" };
+    public static string[] commandNPMInstallNodeMacOS = { "/bin/bash", "-c \"npm install\"" };
+    public static string[] commandNPMInstallNodeLinux = { "/bin/bash", "-c \"npm install\"" };
 
-    public static string[] commandBuildWindows = { "cmd.exe", $"/c npx --yes tailwindcss -i \"{Settings.tailwindStylesFile}\" -o \"{Settings.tailwindBuildPath}\" -c \"{Settings.tailwindConfigUnityFile}\"" };
-    public static string[] commandBuildMacOS = { "/bin/bash", $"-c \"npx --yes tailwindcss -i '{Settings.tailwindStylesFile}' -o '{Settings.tailwindBuildPath}' -c '{Settings.tailwindConfigUnityFile}'\"" };
-    public static string[] commandBuildLinux = { "/bin/bash", $"-c \"npx --yes tailwindcss -i '{Settings.tailwindStylesFile}' -o '{Settings.tailwindBuildPath}' -c '{Settings.tailwindConfigUnityFile}'\"" };
+    public static string[] commandInitWindows = { "cmd.exe", $"/c \"\"{Settings.tempBinaryFile}\" init --full\"" };
+    public static string[] commandInitMacOS = { "/bin/bash", $"-c \"'{Settings.tempBinaryFile}' init --full\"" };
+    public static string[] commandInitLinux = { "/bin/bash", $"-c \"'{Settings.tempBinaryFile}' init --full\"" };
+
+    public static string[] commandBuildWindows = { "cmd.exe", $"/c \"tailwindcss -i \"{Settings.assetsStylesFile}\" -o \"{Settings.assetsUSSFile}\" -c \"{Settings.assetsUnityConfigFile}\"\"" };
+    public static string[] commandBuildMacOS = { "/bin/bash", $"-c \"tailwindcss -i '{Settings.assetsStylesFile}' -o '{Settings.assetsUSSFile}' -c '{Settings.assetsUnityConfigFile}'\"" };
+    public static string[] commandBuildLinux = { "/bin/bash", $"-c \"tailwindcss -i '{Settings.assetsStylesFile}' -o '{Settings.assetsUSSFile}' -c '{Settings.assetsUnityConfigFile}'\"" };
 
     [MenuItem("Tools/Tailwind/Init Tailwind", validate = true)]
     public static bool ValidateShowWindow()
@@ -39,19 +44,72 @@ namespace NGCCorp.TailwindCSS
       Logger.LogInfo("Node.js is installed. Proceeding with Tailwind CSS initialization...");
 
       EnsureTailwindPathExists();
+      CopyPackageFilesToTemp();
+      CopyPackageFilesToAssets();
+      RunNPMInstall();
       InitTailwind();
-      CorePlugins.AddCorePlugins();
+      TailwindConfigBuilder.AddCorePlugins();
+      TailwindConfigBuilder.AddPlugins();
+      TailwindConfigBuilder.AddSeperator();
+      AddRequireTailwindPlugin();
       BuildCSS();
     }
 
-    public static bool HasTailwindConfig() {
-      return File.Exists(Settings.tailwindConfigFile);
+    public static bool HasTailwindConfig()
+    {
+      return File.Exists(Settings.assetsConfigFile);
     }
 
-    public static void BuildCSS() {
-      if (!HasTailwindConfig()) {
+    public static bool HasNodeModulesInTemp()
+    {
+      return File.Exists(Settings.tempBinaryPath);
+    }
+
+    private static void AddRequireTailwindPlugin()
+    {
+      string jsCode = $@"
+        const path = require('path');
+        const pluginPath = path.resolve('{Settings.tempNodeModulesTailwindPluginFile}');
+        const plugin = require(pluginPath);
+      ";
+
+      string originalContent = File.ReadAllText(Settings.assetsConfigFile);
+      string updatedContent = jsCode + Environment.NewLine + originalContent;
+
+      File.WriteAllText(Settings.assetsConfigFile, updatedContent);
+    }
+
+    private static void UpdateRequireTailwindPlugin()
+    {
+      string configContent = File.ReadAllText(Settings.assetsConfigFile);
+      string pattern = @"const pluginPath = path\.resolve\('([^']+)'\);";
+      Match match = Regex.Match(configContent, pattern);
+
+      if (!match.Success)
+      {
+        Console.WriteLine("Plugin path not found in the config file.");
+        return;
+      }
+
+      string oldPath = match.Groups[1].Value;
+      string updatedConfigContent = configContent.Replace(oldPath, Settings.tempNodeModulesTailwindPluginFile);
+
+      File.WriteAllText(Settings.assetsConfigFile, updatedConfigContent);
+    }
+
+    public static void BuildCSS()
+    {
+      if (!HasTailwindConfig())
+      {
         Logger.LogError("Tailwind config file not found. Use Tools/Tailwind/Init Tailwind to create it.");
         return;
+      }
+
+      if (!HasNodeModulesInTemp())
+      {
+        CopyPackageFilesToTemp();
+        RunNPMInstall();
+        UpdateRequireTailwindPlugin();
       }
 
       Converter.ConvertRem();
@@ -66,7 +124,7 @@ namespace NGCCorp.TailwindCSS
       };
 
       // Set up the process start information
-      ProcessStartInfo processInfo = GetProcessStartInfo(command, null);
+      ProcessStartInfo processInfo = GetProcessStartInfo(command, Settings.tempBinaryPath);
 
       // Start the process
       RunProcess(processInfo);
@@ -74,9 +132,26 @@ namespace NGCCorp.TailwindCSS
       Logger.LogInfo("Tailwind CSS build complete!");
     }
 
+    public static void RunNPMInstall()
+    {
+      string[] command = SystemInfo.operatingSystemFamily switch
+      {
+        OperatingSystemFamily.Windows => commandNPMInstallNodeWindows,
+        OperatingSystemFamily.MacOSX => commandNPMInstallNodeMacOS,
+        OperatingSystemFamily.Linux => commandNPMInstallNodeLinux,
+        _ => throw new Exception("Unknown Operating System."),
+      };
+
+      // Set up the process start information
+      ProcessStartInfo processInfo = GetProcessStartInfo(command, Settings.tempPath);
+
+      // Start the process
+      RunProcess(processInfo);
+    }
+
     public static void InitTailwind()
     {
-      Logger.LogInfo($"Init Tailwind in {Settings.tailwindPath}");
+      Logger.LogInfo($"Init Tailwind in {Settings.assetsPath}");
 
       string[] command = SystemInfo.operatingSystemFamily switch
       {
@@ -87,7 +162,7 @@ namespace NGCCorp.TailwindCSS
       };
 
       // Set up the process start information
-      ProcessStartInfo processInfo = GetProcessStartInfo(command, Settings.tailwindPath);
+      ProcessStartInfo processInfo = GetProcessStartInfo(command, Settings.assetsPath);
 
       // Start the process
       RunProcess(processInfo);
@@ -95,9 +170,27 @@ namespace NGCCorp.TailwindCSS
 
     public static void EnsureTailwindPathExists()
     {
-      if (!Directory.Exists(Settings.tailwindPath))
+      if (!Directory.Exists(Settings.assetsPath))
       {
-        Directory.CreateDirectory(Settings.tailwindPath);
+        Directory.CreateDirectory(Settings.assetsPath);
+      }
+    }
+
+    public static void CopyPackageFilesToTemp()
+    {
+      // Check for existing package.json in temp folder
+      if (!File.Exists(Settings.tempPackageJSONFile))
+      {
+        File.Copy(Settings.packageJSONFile, Settings.tempPackageJSONFile);
+      }
+    }
+
+    public static void CopyPackageFilesToAssets()
+    {
+      // Check for existing styles.css in assets
+      if (!File.Exists(Settings.assetsStylesFile))
+      {
+        File.Copy(Settings.packageStylesFile, Settings.assetsStylesFile);
       }
     }
 
@@ -126,10 +219,17 @@ namespace NGCCorp.TailwindCSS
       }
     }
 
-    public static bool RunProcess(ProcessStartInfo processInfo) {
+    public static bool RunProcess(ProcessStartInfo processInfo)
+    {
       using Process process = new();
 
       process.StartInfo = processInfo;
+      process.StartInfo.RedirectStandardOutput = true;
+      process.StartInfo.RedirectStandardError = true;
+      process.StartInfo.UseShellExecute = false;
+
+      process.OutputDataReceived += (sender, args) => Logger.LogInfo(args.Data);
+      process.ErrorDataReceived += (sender, args) => Logger.LogError(args.Data);
 
       process.Start();
       process.BeginOutputReadLine();

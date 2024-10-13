@@ -15,13 +15,13 @@ namespace NGCCorp.TailwindCSS
       string remRegex = @"'(\d*\.?\d+)rem'";
 
       // Read the Tailwind config file
-      string configFile = File.ReadAllText(Settings.tailwindConfigFile);
+      string configFile = File.ReadAllText(Settings.assetsConfigFile);
 
       // Use Regex to replace all rem values with px values
       string updatedConfigFile = Regex.Replace(configFile, remRegex, new MatchEvaluator(RemToPx));
 
       // Write the updated content back to the Tailwind config file
-      File.WriteAllText(Settings.tailwindConfigUnityFile, updatedConfigFile);
+      File.WriteAllText(Settings.assetsUnityConfigFile, updatedConfigFile);
     }
 
     public static void ConvertEm()
@@ -30,13 +30,13 @@ namespace NGCCorp.TailwindCSS
       string remRegex = @"(\d*\.?\d+)em";
 
       // Read the Tailwind config file
-      string configFile = File.ReadAllText(Settings.tailwindConfigUnityFile);
+      string configFile = File.ReadAllText(Settings.assetsUnityConfigFile);
 
       // Use Regex to replace all rem values with px values
       string updatedConfigFile = Regex.Replace(configFile, remRegex, new MatchEvaluator(EmToPx));
 
       // Write the updated content back to the Tailwind config file
-      File.WriteAllText(Settings.tailwindConfigUnityFile, updatedConfigFile);
+      File.WriteAllText(Settings.assetsUnityConfigFile, updatedConfigFile);
     }
 
     // This function takes a rem match and converts it to px

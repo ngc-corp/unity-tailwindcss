@@ -150,7 +150,7 @@
   stroke: false, // The stroke utilities like stroke-green-700
   strokeWidth: false, // The stroke-width utilities like stroke-1
   tableLayout: false, // The table-layout utilities like table-auto
-  textAlign: true, // The text-align utilities like text-right
+  textAlign: false, // The text-align utilities like text-right
   textColor: true, // The text-color utilities like text-green-800
   textDecoration: false, // The text-decoration utilities like overline
   textDecorationColor: false, // The text-decoration-color utilities like decoration-green-800

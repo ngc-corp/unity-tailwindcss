@@ -55,7 +55,7 @@ For the final step to use Tailwind classes in Unity, you need to add the `tailwi
 
 ## Example
 
-Let's assume you have an Overlay.uxml file and a script called UIOverlay.cs that adds buttons for the main menu.
+Let's assume you have an `Overlay.uxml` file and a script called `UIOverlay.cs` that adds buttons for the main menu.
 
 ```xml
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

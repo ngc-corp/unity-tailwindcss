@@ -126,7 +126,7 @@ Which results in the following UI.
 
 USS supports these core plugins out of the box. However, there are some limitations with certain plugins. For example, `border-e-green-800` won't work, but `border-green-800` will. Currently, there are no converters for unsupported core plugins, but this is subject to change as the library evolves during its use in an active project. If you need a specific core plugin for your project, feel free to open an issue, and I'll do my best to make it compatible.
 
-Properties marked as custom differ from the default Tailwind behavior. All custom properties are explained in the example.
+Properties marked as 🔧 differ from the default Tailwind behavior. All custom properties are explained in the example.
 
 | Property                 | Supported |
 |--------------------------|-----------|
@@ -153,7 +153,7 @@ Properties marked as custom differ from the default Tailwind behavior. All custo
 | backgroundClip           | ❌         |
 | backgroundColor          | ✅         |
 | backgroundImage          | ❌         |
-| backgroundOpacity        | ❌         |
+| backgroundOpacity 🔧    | ✅         |
 | backgroundOrigin         | ❌         |
 | backgroundPosition       | ✅         |
 | backgroundRepeat         | ✅         |
@@ -161,7 +161,7 @@ Properties marked as custom differ from the default Tailwind behavior. All custo
 | blur                     | ❌         |
 | borderCollapse           | ❌         |
 | borderColor              | ✅         |
-| borderOpacity            | ❌         |
+| borderOpacity 🔧        | ✅         |
 | borderRadius             | ✅         |
 | borderSpacing            | ❌         |
 | borderStyle              | ❌         |
@@ -281,14 +281,14 @@ Properties marked as custom differ from the default Tailwind behavior. All custo
 | stroke                   | ❌         |
 | strokeWidth              | ❌         |
 | tableLayout              | ❌         |
-| textAlign (custom)       | ✅         |
+| textAlign 🔧            | ✅         |
 | textColor                | ✅         |
 | textDecoration           | ❌         |
 | textDecorationColor      | ❌         |
 | textDecorationStyle      | ❌         |
 | textDecorationThickness  | ❌         |
 | textIndent               | ❌         |
-| textOpacity              | ❌         |
+| textOpacity 🔧          | ✅         |
 | textOverflow             | ✅         |
 | textTransform            | ❌         |
 | textUnderlineOffset      | ❌         |

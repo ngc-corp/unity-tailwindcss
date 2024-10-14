@@ -67,8 +67,9 @@ Let's assume you have an `Overlay.uxml` file and a script called `UIOverlay.cs` 
   xmlns:editor="UnityEditor.UIElements"
   noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
   editor-extension-mode="False"
+  class="grow"
 >
-  <engine:VisualElement name="overlay-wrapper" class="grow justify-center items-center" />
+  <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
 </engine:UXML>
 ```
 
@@ -82,21 +83,24 @@ namespace Zom {
   public class UIOverlay : MonoBehaviour {
     public void Show(Dictionary<string, Action> actions) {
       UIDocument uIDocument = GetComponent<UIDocument>();
-      VisualElement visualElement = uIDocument.rootVisualElement.Q<VisualElement>("overlay-wrapper");
+      VisualElement visualElement = uIDocument.rootVisualElement.Q<VisualElement>("overlay");
 
       foreach (KeyValuePair<string, Action> pair in actions) {
         Button button = new();
 
+        // button.AddToClassList("flex"); // flex is the default in USS
+        button.AddToClassList("justify-center");
+        button.AddToClassList("items-center");
+        button.AddToClassList("h-12");
+        button.AddToClassList("border-4");
+        button.AddToClassList("border-white");
+        button.AddToClassList("bg-black");
         button.AddToClassList("px-3");
         button.AddToClassList("py-2");
-        button.AddToClassList("text-base");
-        button.AddToClassList("rounded-xl");
-        button.AddToClassList("border-0");
+        button.AddToClassList("text-2xl");
+        button.AddToClassList("text-white");
 
-        // Unity does not support / in class names, so we've implemented a USS-compatible logic to ensure opacity can be set for color, background-color, and border-color.
-        button.AddToClassList("bg-stone-950-opacity-50"); // instead of bg-stone-950/50
-        button.AddToClassList("text-white-opacity-40"); // instead of text-white/40
-        button.AddToClassList("border-white-opacity-80"); // instead of border-white/80
+        // USS-compatibility
 
         // Text alignment is implemented through a custom plugin because Unity uses a unique format for text alignment (-unity-text-align)
         button.AddToClassList("text-middle-center");
@@ -120,7 +124,34 @@ If these files are within the configured monitored folders, the USS file will be
 
 Which results in the following UI.
 
-![Example Main Menu](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result.png)
+![Example Overlay with Button](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result.png)
+
+## Example 2 (opacity)
+
+Unity does not support "/" in class names, so we've implemented a USS-compatible logic to ensure opacity can be set for color, background-color, and border-color.
+
+```xml
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:engine="UnityEngine.UIElements"
+  xmlns:editor="UnityEditor.UIElements"
+  noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+  editor-extension-mode="False"
+  class="grow"
+>
+  <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
+    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white px-3 py-2 bg-black text-2xl text-white text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white mt-4 bg-lime-900-opacity-90 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white-opacity-80 mt-4 bg-sky-950-opacity-80 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+  </engine:VisualElement>
+</engine:UXML>
+```
+
+* `active_opacity-50` instead of active:opacity-50
+* `bg-lime-900-opacity-90` instead of bg-lime-900/90
+* `text-white-opacity-80` instead of text-white/80
+* `border-white-opacity-70` instead of border-white/70
+
+![Example Overlay with colored Buttons](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result-2.png)
 
 ## Core Plugins
 

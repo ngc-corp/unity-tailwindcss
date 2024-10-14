@@ -6,7 +6,7 @@ namespace NGCCorp.TailwindCSS
   {
     public static void AddCorePlugins()
     {
-      string tailwindConfigFileText = File.ReadAllText(Settings.assetsConfigFile);
+      string tailwindConfigFileText = File.ReadAllText(Settings.assetsUnityConfigFile);
 
       if (!tailwindConfigFileText.Contains("corePlugins:"))
       {
@@ -18,13 +18,13 @@ namespace NGCCorp.TailwindCSS
         // Insert corePlugins before the closing bracket
         tailwindConfigFileText = tailwindConfigFileText.Insert(closingBracketIndex, $"corePlugins: {tailwindCorePluginsFileText},");
 
-        File.WriteAllText(Settings.assetsConfigFile, tailwindConfigFileText);
+        File.WriteAllText(Settings.assetsUnityConfigFile, tailwindConfigFileText);
       }
     }
 
     public static void AddPlugins()
     {
-      string tailwindConfigFileText = File.ReadAllText(Settings.assetsConfigFile);
+      string tailwindConfigFileText = File.ReadAllText(Settings.assetsUnityConfigFile);
 
       if (tailwindConfigFileText.Contains("plugins: []"))
       {
@@ -39,13 +39,13 @@ namespace NGCCorp.TailwindCSS
 
         tailwindConfigFileText = tailwindConfigFileText.Replace("plugins: []", pluginList);
 
-        File.WriteAllText(Settings.assetsConfigFile, tailwindConfigFileText);
+        File.WriteAllText(Settings.assetsUnityConfigFile, tailwindConfigFileText);
       }
     }
 
     public static void AddSeperator()
     {
-      string tailwindConfigFileText = File.ReadAllText(Settings.assetsConfigFile);
+      string tailwindConfigFileText = File.ReadAllText(Settings.assetsUnityConfigFile);
 
       if (!tailwindConfigFileText.Contains("separator:"))
       {
@@ -53,7 +53,7 @@ namespace NGCCorp.TailwindCSS
 
         tailwindConfigFileText = tailwindConfigFileText.Insert(closingBracketIndex, $"\nseparator: '_',");
 
-        File.WriteAllText(Settings.assetsConfigFile, tailwindConfigFileText);
+        File.WriteAllText(Settings.assetsUnityConfigFile, tailwindConfigFileText);
       }
     }
   }

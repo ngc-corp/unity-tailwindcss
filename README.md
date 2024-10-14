@@ -158,10 +158,10 @@ Unity does not support "/" in class names, so we've implemented a USS-compatible
 </engine:UXML>
 ```
 
-* `active_opacity-50` instead of active:opacity-50
-* `bg-lime-900-opacity-90` instead of bg-lime-900/90
-* `text-white-opacity-80` instead of text-white/80
-* `border-white-opacity-70` instead of border-white/70
+* `active_opacity-50` instead of `active:opacity-50`
+* `bg-lime-900-opacity-90` instead of `bg-lime-900/90`
+* `text-white-opacity-80` instead of `text-white/80`
+* `border-white-opacity-70` instead of `border-white/70`
 
 ![Example Overlay with colored Buttons](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result-2.png)
 

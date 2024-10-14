@@ -23,5 +23,8 @@ UserSettings/
 # Unity3D generated meta files should not be ignored
 !*.meta
 
+# For dev purposes ignore root .meta files
+/*.meta
+
 # Ignore crash reports and log files
 sysinfo.txt

@@ -129,6 +129,8 @@ namespace NGCCorp.TailwindCSS
       // Start the process
       RunProcess(processInfo);
 
+      Converter.ReplaceRgbCalls();
+
       Logger.LogInfo("Tailwind CSS build complete!");
     }
 

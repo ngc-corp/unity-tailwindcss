@@ -85,11 +85,14 @@ namespace Zom {
 
         button.AddToClassList("px-3");
         button.AddToClassList("py-2");
-        button.AddToClassList("text-white");
         button.AddToClassList("text-base");
         button.AddToClassList("rounded-xl");
-        button.AddToClassList("bg-stone-950");
         button.AddToClassList("border-0");
+
+        // Unity does not support / in class names, so we've implemented a USS-compatible logic to ensure opacity can be set for color, background-color, and border-color.
+        button.AddToClassList("bg-stone-950-opacity-50"); // instead of bg-stone-950/50
+        button.AddToClassList("text-white-opacity-40"); // instead of text-white/40
+        button.AddToClassList("border-white-opacity-80"); // instead of border-white/80
 
         // Text alignment is implemented through a custom plugin because Unity uses a unique format for text alignment (-unity-text-align)
         button.AddToClassList("text-middle-center");

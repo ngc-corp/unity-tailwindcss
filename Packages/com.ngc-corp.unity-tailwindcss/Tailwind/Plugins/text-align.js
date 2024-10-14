@@ -29,5 +29,6 @@ plugin(function ({ addUtilities }) {
     },
   };
 
-  addUtilities(newUtilities, ['hover']);
+  // Add the utilities (responsive, hover, focus, etc.)
+  addUtilities(newUtilities, ['responsive', 'hover', 'focus', 'active']);
 })

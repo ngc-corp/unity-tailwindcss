@@ -57,6 +57,18 @@ For the final step to use Tailwind classes in Unity, you need to add the `tailwi
 
 If you don't want to use Unity's default styles, you can remove the default theme. If you're interested in how Unity styles its components, like buttons, you can check here: UnityEngine.UIElements.uss. This is useful when removing the default theme and wanting to replicate Unity’s default styles with Tailwind classes.
 
+To get this working, you need to define some root styles. Create a root.uss file with the following properties and add it to your theme:
+
+```css
+:root {
+  -unity-font-definition: resource("Assets/UI/Fonts/<your-font>.ttf");
+  font-size: 16px;
+  color: #000;
+}
+```
+
+![Theme Style Sheet without default styles](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/image3.png)
+
 ## Example
 
 Let's assume you have an `Overlay.uxml` file and a script called `UIOverlay.cs` that adds buttons for the main menu.

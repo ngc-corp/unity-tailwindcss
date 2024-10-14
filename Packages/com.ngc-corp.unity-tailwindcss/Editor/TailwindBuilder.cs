@@ -48,11 +48,17 @@ namespace NGCCorp.TailwindCSS
       CopyPackageFilesToAssets();
       RunNPMInstall();
       InitTailwind();
+      CreateUnityTailwindConfig();
       TailwindConfigBuilder.AddCorePlugins();
       TailwindConfigBuilder.AddPlugins();
       TailwindConfigBuilder.AddSeperator();
       AddRequireTailwindPlugin();
+      AssetDatabase.Refresh();
       BuildCSS();
+    }
+
+    private static void CreateUnityTailwindConfig() {
+      File.Copy(Settings.assetsConfigFile, Settings.assetsUnityConfigFile, true);
     }
 
     public static bool HasTailwindConfig()
@@ -73,15 +79,15 @@ namespace NGCCorp.TailwindCSS
         const plugin = require(pluginPath);
       ";
 
-      string originalContent = File.ReadAllText(Settings.assetsConfigFile);
+      string originalContent = File.ReadAllText(Settings.assetsUnityConfigFile);
       string updatedContent = jsCode + Environment.NewLine + originalContent;
 
-      File.WriteAllText(Settings.assetsConfigFile, updatedContent);
+      File.WriteAllText(Settings.assetsUnityConfigFile, updatedContent);
     }
 
     private static void UpdateRequireTailwindPlugin()
     {
-      string configContent = File.ReadAllText(Settings.assetsConfigFile);
+      string configContent = File.ReadAllText(Settings.assetsUnityConfigFile);
       string pattern = @"const pluginPath = path\.resolve\('([^']+)'\);";
       Match match = Regex.Match(configContent, pattern);
 
@@ -94,7 +100,7 @@ namespace NGCCorp.TailwindCSS
       string oldPath = match.Groups[1].Value;
       string updatedConfigContent = configContent.Replace(oldPath, Settings.tempNodeModulesTailwindPluginFile);
 
-      File.WriteAllText(Settings.assetsConfigFile, updatedConfigContent);
+      File.WriteAllText(Settings.assetsUnityConfigFile, updatedConfigContent);
     }
 
     public static void BuildCSS()
@@ -105,12 +111,20 @@ namespace NGCCorp.TailwindCSS
         return;
       }
 
+      CreateUnityTailwindConfig();
+
       if (!HasNodeModulesInTemp())
       {
         CopyPackageFilesToTemp();
         RunNPMInstall();
         UpdateRequireTailwindPlugin();
       }
+
+      TailwindConfigBuilder.AddContent();
+      TailwindConfigBuilder.AddCorePlugins();
+      TailwindConfigBuilder.AddPlugins();
+      TailwindConfigBuilder.AddSeperator();
+      AddRequireTailwindPlugin();
 
       Converter.ConvertRem();
       Converter.ConvertEm();
@@ -128,6 +142,8 @@ namespace NGCCorp.TailwindCSS
 
       // Start the process
       RunProcess(processInfo);
+
+      Converter.ReplaceRgbCalls();
 
       Logger.LogInfo("Tailwind CSS build complete!");
     }
@@ -190,7 +206,7 @@ namespace NGCCorp.TailwindCSS
       // Check for existing styles.css in assets
       if (!File.Exists(Settings.assetsStylesFile))
       {
-        File.Copy(Settings.packageStylesFile, Settings.assetsStylesFile);
+        File.Copy(Settings.packageStylesFile, Settings.assetsStylesFile, false);
       }
     }
 

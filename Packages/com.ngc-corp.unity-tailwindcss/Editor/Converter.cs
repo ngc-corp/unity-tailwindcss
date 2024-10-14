@@ -15,7 +15,7 @@ namespace NGCCorp.TailwindCSS
       string remRegex = @"'(\d*\.?\d+)rem'";
 
       // Read the Tailwind config file
-      string configFile = File.ReadAllText(Settings.assetsConfigFile);
+      string configFile = File.ReadAllText(Settings.assetsUnityConfigFile);
 
       // Use Regex to replace all rem values with px values
       string updatedConfigFile = Regex.Replace(configFile, remRegex, new MatchEvaluator(RemToPx));
@@ -63,6 +63,20 @@ namespace NGCCorp.TailwindCSS
 
       // Return the value in px as a string
       return $"{pxValue}px";
+    }
+
+    public static void ReplaceRgbCalls()
+    {
+      string ussContent = File.ReadAllText(Settings.assetsUSSFile);
+
+      // Replace Tailwind-style rgb() with Unity-style rgb(...) and rgba(...)
+      // Replace rgb(a b c)
+      string processedContent = Regex.Replace(ussContent, @"rgb\((\d+) (\d+) (\d+\))", "rgb($1, $2, $3)");
+      // Replace rgb(a b c / d) or rgb(a b c / var(--tw-foo-bar))
+      // processedContent = Regex.Replace(processedContent, @"rgb\((\d+) (\d+) (\d+) \/ ([\d.]+|var\(--[\w-]+\))\)", "rgba($1, $2, $3, $4)");
+
+      // Write the processed content back to the CSS file
+      File.WriteAllText(Settings.assetsUSSFile, processedContent);
     }
   }
 }

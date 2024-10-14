@@ -2,6 +2,8 @@
 
 Tailwind CSS for Unity allows developers to integrate the powerful Tailwind CSS framework with Unity's UI Toolkit. This tool enables Unity users to leverage Tailwind's utility-first CSS to style UXML components effortlessly. By converting Tailwind's rem and arbitrary value classes to Unity-supported formats and simplifying class structures, this tool facilitates seamless UI styling for games and apps. This tool automatically monitors changes in UXML and C# files, triggering CSS regeneration when needed, and can be added globally to reduce the need for manual updates, significantly enhancing workflow efficiency.
 
+Unity’s USS (Unity Style Sheets) is more restrictive with selectors compared to standard CSS used by Tailwind. While this integration brings many benefits of Tailwind into Unity, there are key differences, such as the lack of support for certain selectors and the need to adapt class naming conventions (e.g., avoiding / in class names). We highly recommend checking the example code provided to understand how Tailwind classes are applied in Unity and to explore the differences between traditional Tailwind and this Unity-adapted version.
+
 This project is currently a work in progress and is likely to change. Expect updates, improvements, and possible breaking changes as development continues!
 
 ## Support My Work
@@ -53,6 +55,20 @@ For the final step to use Tailwind classes in Unity, you need to add the `tailwi
 
 ![Adding tailwind.uss to your Theme Style Sheet](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/image2.png)
 
+If you don't want to use Unity's default styles, you can remove the default theme. If you're interested in how Unity styles its components, like buttons, you can check here: UnityEngine.UIElements.uss. This is useful when removing the default theme and wanting to replicate Unity’s default styles with Tailwind classes.
+
+To get this working, you need to define some root styles. Create a `root.uss` file with the following properties and add it to your theme:
+
+```css
+:root {
+  -unity-font-definition: resource("Assets/UI/Fonts/<your-font>.ttf");
+  font-size: 16px;
+  color: #000;
+}
+```
+
+![Theme Style Sheet without default styles](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/image3.png)
+
 ## Example
 
 Let's assume you have an `Overlay.uxml` file and a script called `UIOverlay.cs` that adds buttons for the main menu.
@@ -63,8 +79,9 @@ Let's assume you have an `Overlay.uxml` file and a script called `UIOverlay.cs` 
   xmlns:editor="UnityEditor.UIElements"
   noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
   editor-extension-mode="False"
+  class="grow"
 >
-  <engine:VisualElement name="overlay-wrapper" class="grow justify-center items-center" />
+  <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
 </engine:UXML>
 ```
 
@@ -78,18 +95,24 @@ namespace Zom {
   public class UIOverlay : MonoBehaviour {
     public void Show(Dictionary<string, Action> actions) {
       UIDocument uIDocument = GetComponent<UIDocument>();
-      VisualElement visualElement = uIDocument.rootVisualElement.Q<VisualElement>("overlay-wrapper");
+      VisualElement visualElement = uIDocument.rootVisualElement.Q<VisualElement>("overlay");
 
       foreach (KeyValuePair<string, Action> pair in actions) {
         Button button = new();
 
+        // button.AddToClassList("flex"); // flex is the default in USS
+        button.AddToClassList("justify-center");
+        button.AddToClassList("items-center");
+        button.AddToClassList("h-12");
+        button.AddToClassList("border-4");
+        button.AddToClassList("border-white");
+        button.AddToClassList("bg-black");
         button.AddToClassList("px-3");
         button.AddToClassList("py-2");
+        button.AddToClassList("text-2xl");
         button.AddToClassList("text-white");
-        button.AddToClassList("text-base");
-        button.AddToClassList("rounded-xl");
-        button.AddToClassList("bg-stone-950");
-        button.AddToClassList("border-0");
+
+        // USS-compatibility
 
         // Text alignment is implemented through a custom plugin because Unity uses a unique format for text alignment (-unity-text-align)
         button.AddToClassList("text-middle-center");
@@ -113,13 +136,40 @@ If these files are within the configured monitored folders, the USS file will be
 
 Which results in the following UI.
 
-![Example Main Menu](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result.png)
+![Example Overlay with Button](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result.png)
+
+## Example 2 (opacity)
+
+Unity does not support "/" in class names, so we've implemented a USS-compatible logic to ensure opacity can be set for color, background-color, and border-color.
+
+```xml
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:engine="UnityEngine.UIElements"
+  xmlns:editor="UnityEditor.UIElements"
+  noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+  editor-extension-mode="False"
+  class="grow"
+>
+  <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
+    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white px-3 py-2 bg-black text-2xl text-white text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white mt-4 bg-lime-900-opacity-90 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white-opacity-80 mt-4 bg-sky-950-opacity-80 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+  </engine:VisualElement>
+</engine:UXML>
+```
+
+* `active_opacity-50` instead of `active:opacity-50`
+* `bg-lime-900-opacity-90` instead of `bg-lime-900/90`
+* `text-white-opacity-80` instead of `text-white/80`
+* `border-white-opacity-70` instead of `border-white/70`
+
+![Example Overlay with colored Buttons](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result-2.png)
 
 ## Core Plugins
 
 USS supports these core plugins out of the box. However, there are some limitations with certain plugins. For example, `border-e-green-800` won't work, but `border-green-800` will. Currently, there are no converters for unsupported core plugins, but this is subject to change as the library evolves during its use in an active project. If you need a specific core plugin for your project, feel free to open an issue, and I'll do my best to make it compatible.
 
-Properties marked as custom differ from the default Tailwind behavior. All custom properties are explained in the example.
+Properties marked as 🔧 differ from the default Tailwind behavior. All custom properties are explained in the example.
 
 | Property                 | Supported |
 |--------------------------|-----------|
@@ -146,7 +196,7 @@ Properties marked as custom differ from the default Tailwind behavior. All custo
 | backgroundClip           | ❌         |
 | backgroundColor          | ✅         |
 | backgroundImage          | ❌         |
-| backgroundOpacity        | ❌         |
+| backgroundOpacity 🔧    | ✅         |
 | backgroundOrigin         | ❌         |
 | backgroundPosition       | ✅         |
 | backgroundRepeat         | ✅         |
@@ -154,7 +204,7 @@ Properties marked as custom differ from the default Tailwind behavior. All custo
 | blur                     | ❌         |
 | borderCollapse           | ❌         |
 | borderColor              | ✅         |
-| borderOpacity            | ❌         |
+| borderOpacity 🔧        | ✅         |
 | borderRadius             | ✅         |
 | borderSpacing            | ❌         |
 | borderStyle              | ❌         |
@@ -274,14 +324,14 @@ Properties marked as custom differ from the default Tailwind behavior. All custo
 | stroke                   | ❌         |
 | strokeWidth              | ❌         |
 | tableLayout              | ❌         |
-| textAlign (custom)       | ✅         |
+| textAlign 🔧            | ✅         |
 | textColor                | ✅         |
 | textDecoration           | ❌         |
 | textDecorationColor      | ❌         |
 | textDecorationStyle      | ❌         |
 | textDecorationThickness  | ❌         |
 | textIndent               | ❌         |
-| textOpacity              | ❌         |
+| textOpacity 🔧          | ✅         |
 | textOverflow             | ✅         |
 | textTransform            | ❌         |
 | textUnderlineOffset      | ❌         |

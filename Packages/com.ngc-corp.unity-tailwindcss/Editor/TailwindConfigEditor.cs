@@ -68,61 +68,18 @@ namespace NGCCorp.TailwindCSS
       }
     }
 
-    // Save chosen directories using EditorPrefs
     private void SavePersistentConfig()
     {
-      EditorPrefs.SetString(Settings.prefsKey, string.Join(";", uxmlFolderPaths.ToArray()));
-      Logger.LogInfo("UXML folder paths saved.");
+      PersistentData.SavePersistentConfig(uxmlFolderPaths);
     }
 
-    // Load saved directories on window open
     private void LoadPersistentConfig()
     {
-      if (EditorPrefs.HasKey(Settings.prefsKey))
-      {
-        string savedPaths = EditorPrefs.GetString(Settings.prefsKey);
-        uxmlFolderPaths = new List<string>(savedPaths.Split(';'));
-      }
+      uxmlFolderPaths = PersistentData.LoadPersistentConfig();
     }
 
     private void UpdateTailwindConfig()
     {
-      if (uxmlFolderPaths.Count == 0)
-      {
-        Logger.LogError("No UXML folders selected.");
-        return;
-      }
-
-      string configFile = Settings.assetsConfigFile;
-
-      if (!File.Exists(configFile))
-      {
-        Logger.LogError("Tailwind config file not found. Use Tools/Tailwind/Init Tailwind to create it.");
-        return;
-      }
-
-      // Prepare content section for tailwind.config.js
-      List<string> contentPaths = new List<string>();
-
-      foreach (var path in uxmlFolderPaths)
-      {
-        string absoultePath = Path.GetFullPath(path);
-        contentPaths.Add($"\"{absoultePath.Replace("\\", "/")}/**/*.{{uxml,cs}}\"");
-      }
-
-      string newContent = $"content: [{string.Join(", ", contentPaths)}],";
-
-      // Update tailwind.config.js
-      string configContent = File.ReadAllText(configFile);
-      string updatedConfigContent = System.Text.RegularExpressions.Regex.Replace(
-        configContent,
-        @"content: \[.*?\],",
-        newContent
-      );
-
-      File.WriteAllText(configFile, updatedConfigContent);
-      Logger.LogInfo("Tailwind config updated successfully!");
-
       TailwindBuilder.BuildCSS();
     }
   }

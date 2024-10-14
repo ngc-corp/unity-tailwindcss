@@ -119,6 +119,7 @@ namespace NGCCorp.TailwindCSS
         UpdateRequireTailwindPlugin();
       }
 
+      TailwindConfigBuilder.AddContent();
       TailwindConfigBuilder.AddCorePlugins();
       TailwindConfigBuilder.AddPlugins();
       TailwindConfigBuilder.AddSeperator();

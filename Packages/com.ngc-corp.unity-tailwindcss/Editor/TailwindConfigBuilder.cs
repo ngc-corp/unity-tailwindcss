@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 
 namespace NGCCorp.TailwindCSS
@@ -55,6 +56,40 @@ namespace NGCCorp.TailwindCSS
 
         File.WriteAllText(Settings.assetsUnityConfigFile, tailwindConfigFileText);
       }
+    }
+
+    public static void AddContent() {
+      if (!TailwindBuilder.HasTailwindConfig())
+      {
+        Logger.LogError("Tailwind config file not found. Use Tools/Tailwind/Init Tailwind to create it.");
+        return;
+      }
+
+      List<string> uxmlFolderPaths = PersistentData.LoadPersistentConfig();
+
+      if (uxmlFolderPaths.Count == 0)
+      {
+        Logger.LogError("No UXML folders selected.");
+        return;
+      }
+
+      List<string> contentPaths = new();
+
+      foreach (var path in uxmlFolderPaths)
+      {
+        string absoultePath = Path.GetFullPath(path);
+        contentPaths.Add($"\"{absoultePath.Replace("\\", "/")}/**/*.{{uxml,cs}}\"");
+      }
+
+      string newContent = $"content: [{string.Join(", ", contentPaths)}],";
+      string configContent = File.ReadAllText(Settings.assetsUnityConfigFile);
+      string updatedConfigContent = System.Text.RegularExpressions.Regex.Replace(
+        configContent,
+        @"content: \[.*?\],",
+        newContent
+      );
+
+      File.WriteAllText(Settings.assetsUnityConfigFile, updatedConfigContent);
     }
   }
 }

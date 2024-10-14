@@ -53,6 +53,7 @@ namespace NGCCorp.TailwindCSS
       TailwindConfigBuilder.AddPlugins();
       TailwindConfigBuilder.AddSeperator();
       AddRequireTailwindPlugin();
+      AssetDatabase.Refresh();
       BuildCSS();
     }
 

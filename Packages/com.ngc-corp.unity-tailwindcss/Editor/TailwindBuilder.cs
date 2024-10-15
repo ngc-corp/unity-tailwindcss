@@ -53,7 +53,6 @@ namespace NGCCorp.TailwindCSS
       TailwindConfigBuilder.AddPlugins();
       TailwindConfigBuilder.AddSeperator();
       AddRequireTailwindPlugin();
-      AssetDatabase.Refresh();
       BuildCSS();
     }
 
@@ -144,6 +143,7 @@ namespace NGCCorp.TailwindCSS
       RunProcess(processInfo);
 
       Converter.ReplaceRgbCalls();
+      AssetDatabase.Refresh();
 
       Logger.LogInfo("Tailwind CSS build complete!");
     }

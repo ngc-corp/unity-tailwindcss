@@ -91,42 +91,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Zom {
-  public class UIOverlay : MonoBehaviour {
-    public void Show(Dictionary<string, Action> actions) {
-      UIDocument uIDocument = GetComponent<UIDocument>();
-      VisualElement visualElement = uIDocument.rootVisualElement.Q<VisualElement>("overlay");
+public class UIOverlay : MonoBehaviour {
+  public void Show(Dictionary<string, Action> actions) {
+    UIDocument uIDocument = GetComponent<UIDocument>();
+    VisualElement visualElement = uIDocument.rootVisualElement.Q<VisualElement>("overlay");
 
-      foreach (KeyValuePair<string, Action> pair in actions) {
-        Button button = new();
+    foreach (KeyValuePair<string, Action> pair in actions) {
+      Button button = new();
 
-        // button.AddToClassList("flex"); // flex is the default in USS
-        button.AddToClassList("justify-center");
-        button.AddToClassList("items-center");
-        button.AddToClassList("h-12");
-        button.AddToClassList("border-4");
-        button.AddToClassList("border-white");
-        button.AddToClassList("bg-black");
-        button.AddToClassList("px-3");
-        button.AddToClassList("py-2");
-        button.AddToClassList("text-2xl");
-        button.AddToClassList("text-white");
+      // button.AddToClassList("flex"); // flex is the default in USS
+      button.AddToClassList("justify-center");
+      button.AddToClassList("items-center");
+      button.AddToClassList("h-12");
+      button.AddToClassList("border-4");
+      button.AddToClassList("border-white");
+      button.AddToClassList("bg-black");
+      button.AddToClassList("px-3");
+      button.AddToClassList("py-2");
+      button.AddToClassList("text-2xl");
+      button.AddToClassList("text-white");
 
-        // USS-compatibility
+      // USS-compatibility
 
-        // Text alignment is implemented through a custom plugin because Unity uses a unique format for text alignment (-unity-text-align)
-        button.AddToClassList("text-middle-center");
+      // Text alignment is implemented through a custom plugin because Unity uses a unique format for text alignment (-unity-text-align)
+      button.AddToClassList("text-middle-center");
 
-        // Unity doesn't support ":" as the default separator, so we use "_" instead.
-        // For example, use `hover_bg-white` instead of `hover:bg-white`.
-        button.AddToClassList("hover_bg-white");
-        button.AddToClassList("hover_text-black");
+      // Unity doesn't support ":" as the default separator, so we use "_" instead.
+      // For example, use `hover_bg-white` instead of `hover:bg-white`.
+      button.AddToClassList("hover_bg-white");
+      button.AddToClassList("hover_text-black");
 
-        button.text = pair.Key;
-        button.RegisterCallback<ClickEvent>(ev => pair.Value());
+      button.text = pair.Key;
+      button.RegisterCallback<ClickEvent>(ev => pair.Value());
 
-        visualElement.Add(button);
-      }
+      visualElement.Add(button);
     }
   }
 }

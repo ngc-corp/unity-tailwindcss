@@ -27,7 +27,7 @@ Go to the Releases section on GitHub and download the Unity package. Then, with 
 
 Navigate to `Window/Package Manager`.
 
-On the top left side choose `+ -> install package from git URL`.
+On the top left side choose `+ -> Install package from git URL`.
 
 ![Install package from git URL](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/pm-install-git.png)
 

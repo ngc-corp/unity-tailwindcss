@@ -15,7 +15,7 @@ If you've found my projects helpful and want to support future developments, con
 ## Requirements:
 
 * Unity Version: 6000.0 or later
-* Node.js: Installed for using Tailwind's build process (npx).
+* Node.js: Installed for using Tailwind's build process (20.18.0 recommended).
 
 ## Installation
 
@@ -55,7 +55,7 @@ For the final step to use Tailwind classes in Unity, you need to add the `tailwi
 
 ![Adding tailwind.uss to your Theme Style Sheet](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/image2.png)
 
-If you don't want to use Unity's default styles, you can remove the default theme. If you're interested in how Unity styles its components, like buttons, you can check here: UnityEngine.UIElements.uss. This is useful when removing the default theme and wanting to replicate Unity’s default styles with Tailwind classes.
+If you don't want to use Unity's default styles, you can remove the default theme. If you're interested in how Unity styles its components, like buttons, you can check here: [UnityEngine.UIElements.uss](https://github.com/needle-mirror/com.unity.ui/blob/master/PackageResources/StyleSheets/Default/UnityEngine.UIElements.uss). This is useful when removing the default theme and wanting to replicate Unity’s default styles with Tailwind classes.
 
 To get this working, you need to define some root styles. Create a `root.uss` file with the following properties and add it to your theme:
 

@@ -52,7 +52,7 @@
   content: false, // The content utilities like content-none
   contrast: false, // The contrast utilities like contrast-100
   cursor: true, // The cursor utilities like cursor-grab
-  display: true, // The display utilities like table-column-group
+  display: false, // The display utilities like table-column-group
   divideColor: false, // The between elements border-color utilities like divide-slate-500
   divideOpacity: false, // The divide-opacity utilities like divide-opacity-50
   divideStyle: false, // The divide-style utilities like divide-dotted

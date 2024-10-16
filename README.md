@@ -236,7 +236,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | content                  | ❌         |
 | contrast                 | ❌         |
 | cursor                   | ✅         |
-| display                  | ✅         |
+| display 🔧              | ✅         |
 | divideColor              | ❌         |
 | divideOpacity            | ❌         |
 | divideStyle              | ❌         |

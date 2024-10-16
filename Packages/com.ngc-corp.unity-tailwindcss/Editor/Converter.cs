@@ -78,5 +78,19 @@ namespace NGCCorp.TailwindCSS
       // Write the processed content back to the CSS file
       File.WriteAllText(Settings.assetsUSSFile, processedContent);
     }
+
+    public static void RemoveLineHeight()
+    {
+      string configFilePath = Settings.assetsUnityConfigFile;
+
+      // Read the contents of the Tailwind config file
+      string configFileContent = File.ReadAllText(configFilePath);
+
+      // Regex to find and remove lineHeight properties
+      string processedContent = Regex.Replace(configFileContent, @", \{[^{}]*lineHeight[^{}]*\}", "");
+
+      // Write the modified content back to the config file
+      File.WriteAllText(configFilePath, processedContent);
+    }
   }
 }

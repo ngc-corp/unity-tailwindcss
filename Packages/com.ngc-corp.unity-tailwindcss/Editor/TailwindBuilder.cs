@@ -127,6 +127,7 @@ namespace NGCCorp.TailwindCSS
 
       Converter.ConvertRem();
       Converter.ConvertEm();
+      Converter.RemoveLineHeight();
 
       string[] command = SystemInfo.operatingSystemFamily switch
       {

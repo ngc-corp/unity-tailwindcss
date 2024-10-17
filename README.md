@@ -59,7 +59,9 @@ Navigate to `Tools/Tailwind/Configure Tailwind`.
 
 ![Tailwind Config Editor](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/image.png)
 
-Here, you can set paths to be monitored for changes in `.uxml` and `.cs` files. If any file in these directories changes, tailwind.uss will be rebuilt.
+Here, you can set paths to be monitored for changes in `.uxml`, `.cs` and `.css` files. If any file in these directories changes, tailwind.uss will be rebuilt.
+
+If you plan to create custom styles in `styles.css` located in `Assets/TailwindCSS`, make sure to add this folder to the monitored paths as well.
 
 ## Add tailwind.uss to your theme
 

@@ -1,6 +1,6 @@
 plugin(function ({ addUtilities }) {
   const displayUtilities = {
-    '.none': { display: 'none' },
+    '.hidden': { display: 'none' },
     '.flex': { display: 'flex' },
   };
 

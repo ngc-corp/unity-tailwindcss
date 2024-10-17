@@ -3,8 +3,10 @@ using System.IO;
 using UnityEditor;
 
 namespace NGCCorp.TailwindCSS {
-  public class UXMLPostprocessor : AssetPostprocessor
+  public  class UXMLPostprocessor : AssetPostprocessor
   {
+    private static readonly List<string> monitoredExtensions = new() { ".cs", ".css", ".uxml" };
+
     // This method is called when any asset is changed, imported, deleted, or moved
     private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
@@ -35,16 +37,16 @@ namespace NGCCorp.TailwindCSS {
       return new List<string>();
     }
 
-    // Checks if the asset is a UXML or C# file and is within the monitored folders
+    // Checks if the asset extension is one monitoredExtensions and is within the monitored folders
     private static bool IsMonitoredAsset(string assetPath, List<string> monitoredFolders)
     {
       string extension = Path.GetExtension(assetPath);
-      bool isUXMLorCS = extension == ".uxml" || extension == ".cs";
+      bool monitoredExtension = monitoredExtensions.Contains(extension);
 
       // Check if the asset path starts with any of the monitored folder paths
       bool isInMonitoredFolder = monitoredFolders.Exists(folder => assetPath.StartsWith(folder.Replace("\\", "/")));
 
-      return isUXMLorCS && isInMonitoredFolder;
+      return monitoredExtension && isInMonitoredFolder;
     }
   }
 }

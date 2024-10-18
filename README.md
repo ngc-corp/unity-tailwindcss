@@ -69,9 +69,7 @@ For the final step to use Tailwind classes in Unity, you need to add the `tailwi
 
 ![Adding tailwind.uss to your Theme Style Sheet](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/image2.png)
 
-If you don't want to use Unity's default styles, you can remove the default theme. If you're interested in how Unity styles its components, like buttons, you can check here: [UnityEngine.UIElements.uss](https://github.com/needle-mirror/com.unity.ui/blob/master/PackageResources/StyleSheets/Default/UnityEngine.UIElements.uss). This is useful when removing the default theme and wanting to replicate Unity's default styles with Tailwind classes.
-
-To get this working, you need to define some root styles. Create a `root.uss` file with the following properties and add it to your theme:
+If you don't want to use Unity's default styles, you can remove the default theme. To get this working, you need to define some root styles. Create a `root.uss` file with the following properties and add it to your theme:
 
 ```css
 :root {
@@ -167,12 +165,12 @@ Unity does not support "/" in class names, so we've implemented a USS-compatible
 
 ## Core Plugins
 
-USS supports these core plugins out of the box. However, there are some limitations with certain plugins. For example, `border-e-green-800` won't work, but `border-green-800` will. Currently, there are no converters for unsupported core plugins, but this is subject to change as the library evolves during its use in an active project. If you need a specific core plugin for your project, feel free to open an issue, and I'll do my best to make it compatible.
+USS supports these core plugins out of the box. However, there are some limitations with certain plugins. For example, `border-e-green-800` won't work, but `border-green-800` will. Currently, there are some converters and plugins for unsupported core plugins already. If you need a specific core plugin for your project, feel free to open an issue, and I'll do my best to make it compatible.
 
-Properties marked as 🔧 differ from the default Tailwind behavior. All custom properties are explained in the example.
+Properties marked as 🔧 differ from the default Tailwind behavior.
 
-| Property                 | Supported |
-|--------------------------|-----------|
+| Property                 | Supported  | Example |
+|--------------------------|------------|---------|
 | accentColor              | ❌         |
 | accessibility            | ❌         |
 | alignContent             | ✅         |
@@ -196,7 +194,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | backgroundClip           | ❌         |
 | backgroundColor          | ✅         |
 | backgroundImage          | ❌         |
-| backgroundOpacity 🔧    | ✅         |
+| backgroundOpacity 🔧    | ✅         | `bg-lime-900-opacity-90` |
 | backgroundOrigin         | ❌         |
 | backgroundPosition       | ✅         |
 | backgroundRepeat         | ✅         |
@@ -204,7 +202,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | blur                     | ❌         |
 | borderCollapse           | ❌         |
 | borderColor              | ✅         |
-| borderOpacity 🔧        | ✅         |
+| borderOpacity 🔧        | ✅         | `border-white-opacity-70` |
 | borderRadius             | ✅         |
 | borderSpacing            | ❌         |
 | borderStyle              | ❌         |
@@ -226,7 +224,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | content                  | ❌         |
 | contrast                 | ❌         |
 | cursor                   | ✅         |
-| display 🔧              | ✅         |
+| display 🔧              | ✅         | `flex`, `hidden` |
 | divideColor              | ❌         |
 | divideOpacity            | ❌         |
 | divideStyle              | ❌         |
@@ -300,7 +298,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | placeholderColor         | ❌         |
 | placeholderOpacity       | ❌         |
 | pointerEvents            | ❌         |
-| position 🔧             | ✅         |
+| position 🔧             | ✅         | `absolute`, `relative` |
 | preflight                | ❌         |
 | resize                   | ❌         |
 | ringColor                | ❌         |
@@ -324,14 +322,14 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | stroke                   | ❌         |
 | strokeWidth              | ❌         |
 | tableLayout              | ❌         |
-| textAlign 🔧            | ✅         |
+| textAlign 🔧            | ✅         | `text-upper-left`, `text-middle-left`, `text-lower-left`, `text-upper-center`, `text-middle-center`, `text-lower-center`, `text-upper-right`, `text-middle-right`, `text-lower-right` |
 | textColor                | ✅         |
 | textDecoration           | ❌         |
 | textDecorationColor      | ❌         |
 | textDecorationStyle      | ❌         |
 | textDecorationThickness  | ❌         |
 | textIndent               | ❌         |
-| textOpacity 🔧          | ✅         |
+| textOpacity 🔧          | ✅         | text-white-opacity-80 |
 | textOverflow             | ✅         |
 | textTransform            | ❌         |
 | textUnderlineOffset      | ❌         |
@@ -352,3 +350,10 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | willChange               | ❌         |
 | wordBreak                | ❌         |
 | zIndex                   | ❌         |
+
+## Custom Plugins
+
+| Property                 | Supported  | Example |
+|--------------------------|------------|---------|
+| --unity-selection-color  | ✅         | `unity-selection-color-white` `unity-selection-color-white-opacity-30`
+| --unity-cursor-color     | ✅         | `unity-cursor-color-white` `unity-cursor-color-white-opacity-30`

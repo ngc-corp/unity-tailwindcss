@@ -6,9 +6,9 @@ plugin(function ({ addUtilities, theme }) {
   Object.keys(colors).forEach(colorName => {
     const colorValue = colors[colorName];
 
-    // Add a utility class for each color to set --unity-selection-color
-    newUtilities[`.unity-selection-color-${colorName}`] = {
-      '--unity-selection-color': colorValue,
+    // Add a utility class for each color to set --unity-cursor-color
+    newUtilities[`.unity-cursor-color-${colorName}`] = {
+      '--unity-cursor-color': colorValue,
     };
   });
 

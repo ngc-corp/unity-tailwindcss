@@ -1,6 +1,6 @@
 {
   "name": "com.ngc-corp.unity-tailwindcss",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "displayName": "TailwindCSS",
   "description": "Tailwind CSS for Unity allows developers to integrate the powerful Tailwind CSS framework with Unity's UI Toolkit. This tool enables Unity users to leverage Tailwind's utility-first CSS to style UXML and USS components effortlessly. By converting Tailwind's rem and arbitrary value classes to Unity-supported formats and simplifying class structures, this tool facilitates seamless UI styling for games and apps. This tool automatically monitors changes in UXML and C# files, triggering CSS regeneration when needed, and can be added globally to reduce the need for manual updates, significantly enhancing workflow efficiency.",
   "unity": "6000.0",

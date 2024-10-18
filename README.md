@@ -88,13 +88,7 @@ To get this working, you need to define some root styles. Create a `root.uss` fi
 Let's assume you have an `Overlay.uxml` file and a script called `UIOverlay.cs` that adds buttons for the main menu.
 
 ```xml
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:engine="UnityEngine.UIElements"
-  xmlns:editor="UnityEditor.UIElements"
-  noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
-  editor-extension-mode="False"
-  class="grow"
->
+<engine:UXML xmlns:engine="UnityEngine.UIElements" class="grow">
   <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
 </engine:UXML>
 ```
@@ -155,13 +149,7 @@ Which results in the following UI.
 Unity does not support "/" in class names, so we've implemented a USS-compatible logic to ensure opacity can be set for color, background-color, and border-color.
 
 ```xml
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:engine="UnityEngine.UIElements"
-  xmlns:editor="UnityEditor.UIElements"
-  noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
-  editor-extension-mode="False"
-  class="grow"
->
+<engine:UXML xmlns:engine="UnityEngine.UIElements" class="grow">
   <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
     <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white px-3 py-2 bg-black text-2xl text-white text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
     <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white mt-4 bg-lime-900-opacity-90 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
@@ -312,7 +300,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior. All custom 
 | placeholderColor         | ❌         |
 | placeholderOpacity       | ❌         |
 | pointerEvents            | ❌         |
-| position                 | ✅         |
+| position 🔧             | ✅         |
 | preflight                | ❌         |
 | resize                   | ❌         |
 | ringColor                | ❌         |

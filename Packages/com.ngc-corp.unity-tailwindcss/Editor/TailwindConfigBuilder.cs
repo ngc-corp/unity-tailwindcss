@@ -29,14 +29,16 @@ namespace NGCCorp.TailwindCSS
 
       if (tailwindConfigFileText.Contains("plugins: []"))
       {
-        string pluginTextAlign = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "text-align.js"));
-        string pluginOpacity = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "opacity.js"));
         string pluginDisplay = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "display.js"));
+        string pluginOpacity = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "opacity.js"));
+        string pluginPosition = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "position.js"));
+        string pluginTextAlign = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "text-align.js"));
         string[] pluginsToAdd = new string[]
         {
-          pluginTextAlign,
-          pluginOpacity,
           pluginDisplay,
+          pluginOpacity,
+          pluginPosition,
+          pluginTextAlign,
         };
         string pluginList = "plugins: [\n" + string.Join(",\n", pluginsToAdd) + "\n  ]";
 

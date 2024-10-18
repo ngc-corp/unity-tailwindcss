@@ -126,7 +126,7 @@
   placeholderColor: false, // The placeholder color utilities like placeholder-red-600
   placeholderOpacity: false, // The placeholder color opacity utilities like placeholder-opacity-25
   pointerEvents: false, // The pointer-events utilities like pointer-events-none
-  position: true, // The position utilities like absolute
+  position: false, // The position utilities like absolute
   preflight: false, // Tailwind's base/reset styles
   resize: false, // The resize utilities like resize-y
   ringColor: false, // The ring-color utilities like ring-green-800

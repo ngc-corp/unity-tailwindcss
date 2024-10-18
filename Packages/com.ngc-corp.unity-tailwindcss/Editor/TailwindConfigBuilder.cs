@@ -33,12 +33,16 @@ namespace NGCCorp.TailwindCSS
         string pluginOpacity = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "opacity.js"));
         string pluginPosition = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "position.js"));
         string pluginTextAlign = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "text-align.js"));
+        string pluginUnityCursorColor = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "unity-cursor-color.js"));
+        string pluginUnitySelectionColor = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "unity-selection-color.js"));
         string[] pluginsToAdd = new string[]
         {
           pluginDisplay,
           pluginOpacity,
           pluginPosition,
           pluginTextAlign,
+          pluginUnityCursorColor,
+          pluginUnitySelectionColor,
         };
         string pluginList = "plugins: [\n" + string.Join(",\n", pluginsToAdd) + "\n  ]";
 

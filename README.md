@@ -193,7 +193,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 | backgroundBlendMode      | ❌         |
 | backgroundClip           | ❌         |
 | backgroundColor          | ✅         |
-| backgroundImage          | ❌         |
+| backgroundImage 🔧      | ✅         | `none` |
 | backgroundOpacity 🔧    | ✅         | `bg-lime-900-opacity-90` |
 | backgroundOrigin         | ❌         |
 | backgroundPosition       | ✅         |
@@ -329,7 +329,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 | textDecorationStyle      | ❌         |
 | textDecorationThickness  | ❌         |
 | textIndent               | ❌         |
-| textOpacity 🔧          | ✅         | text-white-opacity-80 |
+| textOpacity 🔧          | ✅         | `text-white-opacity-80` |
 | textOverflow             | ✅         |
 | textTransform            | ❌         |
 | textUnderlineOffset      | ❌         |

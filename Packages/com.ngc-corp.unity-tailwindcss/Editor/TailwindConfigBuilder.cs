@@ -29,19 +29,23 @@ namespace NGCCorp.TailwindCSS
 
       if (tailwindConfigFileText.Contains("plugins: []"))
       {
+        string pluginBackgroundImage = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "background-image.js"));
         string pluginDisplay = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "display.js"));
         string pluginOpacity = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "opacity.js"));
         string pluginPosition = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "position.js"));
         string pluginTextAlign = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "text-align.js"));
         string pluginUnityCursorColor = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "unity-cursor-color.js"));
+        string pluginUnityImageSize = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "unity-image-size.js"));
         string pluginUnitySelectionColor = File.ReadAllText(Settings.CombinePaths(Settings.pluginsPath, "unity-selection-color.js"));
         string[] pluginsToAdd = new string[]
         {
+          pluginBackgroundImage,
           pluginDisplay,
           pluginOpacity,
           pluginPosition,
           pluginTextAlign,
           pluginUnityCursorColor,
+          pluginUnityImageSize,
           pluginUnitySelectionColor,
         };
         string pluginList = "plugins: [\n" + string.Join(",\n", pluginsToAdd) + "\n  ]";

@@ -25,12 +25,12 @@ namespace NGCCorp.TailwindCSS
 
     private void OnGUI()
     {
-      GUILayout.Label("Configure Tailwind UXML and CS Scanning", EditorStyles.boldLabel);
+      GUILayout.Label("Configure Tailwind Scanning", EditorStyles.boldLabel);
 
       // Button to select new UXML folder
-      if (GUILayout.Button("Add UXML and CS Folders"))
+      if (GUILayout.Button("Add Folder"))
       {
-        string selectedFolder = EditorUtility.OpenFolderPanel("Select UXML and CS Folders", "", "");
+        string selectedFolder = EditorUtility.OpenFolderPanel("Select Folder", "", "");
 
         if (!string.IsNullOrEmpty(selectedFolder))
         {
@@ -44,7 +44,7 @@ namespace NGCCorp.TailwindCSS
       }
 
       // Display already chosen UXML folders
-      GUILayout.Label("Chosen UXML Folders:", EditorStyles.boldLabel);
+      GUILayout.Label("Chosen Folders:", EditorStyles.boldLabel);
 
       for (int i = 0; i < uxmlFolderPaths.Count; i++)
       {

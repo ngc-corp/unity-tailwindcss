@@ -167,7 +167,7 @@ Unity does not support "/" in class names, so we've implemented a USS-compatible
 
 USS supports these core plugins out of the box. However, there are some limitations with certain plugins. For example, `border-e-green-800` won't work, but `border-green-800` will. Currently, there are some converters and plugins for unsupported core plugins already. If you need a specific core plugin for your project, feel free to open an issue, and I'll do my best to make it compatible.
 
-Properties marked as 🔧 differ from the default Tailwind behavior.
+Properties that differ from the default Tailwind behavior are explained in the example column.
 
 | Property                 | Supported  | Example |
 |--------------------------|------------|---------|
@@ -193,8 +193,8 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 | backgroundBlendMode      | ❌         |
 | backgroundClip           | ❌         |
 | backgroundColor          | ✅         |
-| backgroundImage 🔧      | ✅         | `none` |
-| backgroundOpacity 🔧    | ✅         | `bg-lime-900-opacity-90` |
+| backgroundImage          | ✅         | `none` |
+| backgroundOpacity        | ✅         | `bg-lime-900-opacity-90` |
 | backgroundOrigin         | ❌         |
 | backgroundPosition       | ✅         |
 | backgroundRepeat         | ✅         |
@@ -202,7 +202,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 | blur                     | ❌         |
 | borderCollapse           | ❌         |
 | borderColor              | ✅         |
-| borderOpacity 🔧        | ✅         | `border-white-opacity-70` |
+| borderOpacity            | ✅         | `border-white-opacity-70` |
 | borderRadius             | ✅         |
 | borderSpacing            | ❌         |
 | borderStyle              | ❌         |
@@ -224,7 +224,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 | content                  | ❌         |
 | contrast                 | ❌         |
 | cursor                   | ✅         |
-| display 🔧              | ✅         | `flex`, `hidden` |
+| display                  | ✅         | `flex`, `hidden` |
 | divideColor              | ❌         |
 | divideOpacity            | ❌         |
 | divideStyle              | ❌         |
@@ -298,7 +298,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 | placeholderColor         | ❌         |
 | placeholderOpacity       | ❌         |
 | pointerEvents            | ❌         |
-| position 🔧             | ✅         | `absolute`, `relative` |
+| position                 | ✅         | `absolute`, `relative` |
 | preflight                | ❌         |
 | resize                   | ❌         |
 | ringColor                | ❌         |
@@ -322,14 +322,14 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 | stroke                   | ❌         |
 | strokeWidth              | ❌         |
 | tableLayout              | ❌         |
-| textAlign 🔧            | ✅         | `text-upper-left`, `text-middle-left`, `text-lower-left`, `text-upper-center`, `text-middle-center`, `text-lower-center`, `text-upper-right`, `text-middle-right`, `text-lower-right` |
+| textAlign                | ✅         | `text-upper-left`, `text-middle-left`, `text-lower-left`, `text-upper-center`, `text-middle-center`, `text-lower-center`, `text-upper-right`, `text-middle-right`, `text-lower-right` |
 | textColor                | ✅         |
 | textDecoration           | ❌         |
 | textDecorationColor      | ❌         |
 | textDecorationStyle      | ❌         |
 | textDecorationThickness  | ❌         |
 | textIndent               | ❌         |
-| textOpacity 🔧          | ✅         | `text-white-opacity-80` |
+| textOpacity              | ✅         | `text-white-opacity-80` |
 | textOverflow             | ✅         |
 | textTransform            | ❌         |
 | textUnderlineOffset      | ❌         |
@@ -355,5 +355,7 @@ Properties marked as 🔧 differ from the default Tailwind behavior.
 
 | Property                 | Supported  | Example |
 |--------------------------|------------|---------|
-| --unity-selection-color  | ✅         | `unity-selection-color-white` `unity-selection-color-white-opacity-30`
-| --unity-cursor-color     | ✅         | `unity-cursor-color-white` `unity-cursor-color-white-opacity-30`
+| --unity-selection-color  | ✅         | `u-selection-white`, `u-selection-white-opacity-30` |
+| --unity-cursor-color     | ✅         | `u-cursor-white`, `u-cursor-white-opacity-30` |
+| --unity-image-size       | ✅         | `stretch-to-fill`, `scale-and-crop`, `scale-to-fit` |
+| -unity-background-tint-color | ✅     | `u-bg-tint-white`, `u-bg-tint-white-opacity-30` |

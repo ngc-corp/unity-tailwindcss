@@ -43,11 +43,14 @@ plugin(function ({ addUtilities, theme }) {
           utilities[`.text-${colorKey}-opacity-${opacityKey}`] = {
             color: `rgba(${r}, ${g}, ${b}, ${opacityValue})`,
           };
-          utilities[`.unity-selection-color-${colorKey}-opacity-${opacityKey}`] = {
+          utilities[`.u-selection-${colorKey}-opacity-${opacityKey}`] = {
             '--unity-selection-color': `rgba(${r}, ${g}, ${b}, ${opacityValue})`,
           };
-          utilities[`.unity-cursor-color-${colorKey}-opacity-${opacityKey}`] = {
+          utilities[`.u-cursor-${colorKey}-opacity-${opacityKey}`] = {
             '--unity-cursor-color': `rgba(${r}, ${g}, ${b}, ${opacityValue})`,
+          };
+          utilities[`.u-bg-tint-${colorKey}-opacity-${opacityKey}`] = {
+            '-unity-background-image-tint-color': `rgba(${r}, ${g}, ${b}, ${opacityValue})`,
           };
         }
 
@@ -62,11 +65,14 @@ plugin(function ({ addUtilities, theme }) {
           utilities[`.text-${colorKey}-opacity-${opacityKey}`] = {
             color: `${colorValue}`,
           };
-          utilities[`.unity-selection-color-${colorKey}-opacity-${opacityKey}`] = {
+          utilities[`.u-selection-${colorKey}-opacity-${opacityKey}`] = {
             '--unity-selection-color': `${colorValue}`,
           };
-          utilities[`.unity-cursor-color-${colorKey}-opacity-${opacityKey}`] = {
+          utilities[`.u-cursor-${colorKey}-opacity-${opacityKey}`] = {
             '--unity-cursor-color': `${colorValue}`,
+          };
+          utilities[`.u-bg-tint-${colorKey}-opacity-${opacityKey}`] = {
+            '-unity-background-image-tint-color': `${colorValue}`,
           };
         }
       });

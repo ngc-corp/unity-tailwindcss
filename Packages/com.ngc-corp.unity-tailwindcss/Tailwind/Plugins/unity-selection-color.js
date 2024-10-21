@@ -7,7 +7,7 @@ plugin(function ({ addUtilities, theme }) {
     const colorValue = colors[colorName];
 
     // Add a utility class for each color to set --unity-selection-color
-    newUtilities[`.unity-selection-color-${colorName}`] = {
+    newUtilities[`.u-selection-${colorName}`] = {
       '--unity-selection-color': colorValue,
     };
   });

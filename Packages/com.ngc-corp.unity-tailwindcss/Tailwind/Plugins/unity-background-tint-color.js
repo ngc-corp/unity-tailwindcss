@@ -7,7 +7,7 @@ plugin(function ({ addUtilities, theme }) {
     const colorValue = colors[colorName];
 
     // Add a utility class for each color to set --unity-background-image-tint-color
-    newUtilities[`.unity-background-image-tint-color-${colorName}`] = {
+    newUtilities[`.u-bg-tint-${colorName}`] = {
       '-unity-background-image-tint-color': colorValue,
     };
   });

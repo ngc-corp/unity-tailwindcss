@@ -7,7 +7,7 @@ plugin(function ({ addUtilities, theme }) {
     const colorValue = colors[colorName];
 
     // Add a utility class for each color to set --unity-cursor-color
-    newUtilities[`.unity-cursor-color-${colorName}`] = {
+    newUtilities[`.u-cursor-${colorName}`] = {
       '--unity-cursor-color': colorValue,
     };
   });

@@ -16,7 +16,7 @@ plugin(function ({ addUtilities }) {
       '-unity-text-align': 'middle-center',
     },
     '.text-lower-center': {
-      '--unity-text-align': 'lower-center',
+      '-unity-text-align': 'lower-center',
     },
     '.text-upper-right': {
       '-unity-text-align': 'upper-right',

@@ -86,9 +86,9 @@ If you don't want to use Unity's default styles, you can remove the default them
 Let's assume you have an `Overlay.uxml` file and a script called `UIOverlay.cs` that adds buttons for the main menu.
 
 ```xml
-<engine:UXML xmlns:engine="UnityEngine.UIElements" class="grow">
-  <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
-</engine:UXML>
+<UXML xmlns="UnityEngine.UIElements" class="grow">
+  <VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
+</UXML>
 ```
 
 ```csharp
@@ -147,13 +147,13 @@ Which results in the following UI.
 Unity does not support "/" in class names, so we've implemented a USS-compatible logic to ensure opacity can be set for color, background-color, and border-color.
 
 ```xml
-<engine:UXML xmlns:engine="UnityEngine.UIElements" class="grow">
-  <engine:VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
-    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white px-3 py-2 bg-black text-2xl text-white text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
-    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white mt-4 bg-lime-900-opacity-90 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
-    <engine:Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white-opacity-80 mt-4 bg-sky-950-opacity-80 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
-  </engine:VisualElement>
-</engine:UXML>
+<UXML xmlns="UnityEngine.UIElements" class="grow">
+  <VisualElement name="overlay" class="grow justify-center items-center bg-black-opacity-80">
+    <Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white px-3 py-2 bg-black text-2xl text-white text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+    <Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white mt-4 bg-lime-900-opacity-90 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+    <Button name="button" text="Button" class="flex justify-center items-center h-12 border-4 border-white-opacity-80 mt-4 bg-sky-950-opacity-80 px-3 py-2 text-2xl text-white-opacity-80 text-middle-center hover_bg-white hover_text-black active_opacity-50 active_bg-black active_text-white" />
+  </VisualElement>
+</UXML>
 ```
 
 * `active_opacity-50` instead of `active:opacity-50`
@@ -162,6 +162,26 @@ Unity does not support "/" in class names, so we've implemented a USS-compatible
 * `border-white-opacity-70` instead of `border-white/70`
 
 ![Example Overlay with colored Buttons](./Packages/com.ngc-corp.unity-tailwindcss/Documentation/example-result-2.png)
+
+## Flexbox Grid
+
+```
+<UXML xmlns="UnityEngine.UIElements">
+  <VisualElement class="container" name="flexbox-grid">
+    <VisualElement class="row">
+      <VisualElement class="col">
+        <!-- CONTENT -->
+      </VisualElement>
+      <VisualElement class="col">
+        <!-- CONTENT -->
+      </VisualElement>
+      <VisualElement class="col">
+        <!-- CONTENT -->
+      </VisualElement>
+    </VisualElement>
+  </VisualElement>
+</UXML>
+```
 
 ## Core Plugins
 

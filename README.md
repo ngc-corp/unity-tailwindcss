@@ -165,7 +165,7 @@ Unity does not support "/" in class names, so we've implemented a USS-compatible
 
 ## Flexbox Grid
 
-```
+```xml
 <UXML xmlns="UnityEngine.UIElements">
   <VisualElement class="container" name="flexbox-grid">
     <VisualElement class="row">

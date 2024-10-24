@@ -48,7 +48,7 @@
   clear: false, // The clear utilities like clear-left
   columns: false, // The columns utilities like columns-auto
   contain: false, // The contain utilities like contain-size
-  container: true, // The container component
+  container: false, // The container component
   content: false, // The content utilities like content-none
   contrast: false, // The contrast utilities like contrast-100
   cursor: true, // The cursor utilities like cursor-grab

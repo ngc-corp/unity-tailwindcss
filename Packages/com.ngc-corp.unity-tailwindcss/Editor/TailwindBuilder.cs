@@ -56,7 +56,8 @@ namespace NGCCorp.TailwindCSS
       BuildCSS();
     }
 
-    private static void CreateUnityTailwindConfig() {
+    private static void CreateUnityTailwindConfig()
+    {
       File.Copy(Settings.assetsConfigFile, Settings.assetsUnityConfigFile, true);
     }
 
@@ -151,6 +152,13 @@ namespace NGCCorp.TailwindCSS
 
     public static void RunNPMInstall()
     {
+      if (Directory.Exists(Settings.tempNodeModulesPath))
+      {
+        Logger.LogInfo("Skipping npm install");
+
+        return;
+      }
+
       string[] command = SystemInfo.operatingSystemFamily switch
       {
         OperatingSystemFamily.Windows => commandNPMInstallNodeWindows,

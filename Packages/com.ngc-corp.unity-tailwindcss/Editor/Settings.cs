@@ -6,7 +6,10 @@ namespace NGCCorp.TailwindCSS
 {
   public static class Settings
   {
-    public static string prefsKey = "NGCCorp__Tailwind_UXML_Folders";
+    public static string prefsKeyFolders = "NGCCorp__Tailwind_UXML_Folders";
+    public static string prefsKeyDebug = "NGCCorp__Tailwind_Debug";
+    public static bool showDebug = true;
+
     private static bool isInitialized = false;
 
     // Package

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace NGCCorp.TailwindCSS
 {
@@ -61,38 +62,104 @@ namespace NGCCorp.TailwindCSS
       }
     }
 
-    public static void AddContent() {
-      if (!TailwindBuilder.HasTailwindConfig())
+    public static void AddContent()
+    {
+      string folders = PersistentData.LoadPersistentConfig<string>(Settings.prefsKeyFolders);
+
+      if (!folders.Equals(default))
       {
-        Logger.LogError("Tailwind config file not found. Use Tools/Tailwind/Init Tailwind to create it.");
-        return;
+        List<string> uxmlFolderPaths = folders.Split(";").ToList();
+
+        if (uxmlFolderPaths.Count == 0)
+        {
+          Logger.LogError("No UXML folders selected.");
+          return;
+        }
+
+        List<string> contentPaths = new();
+
+        foreach (var path in uxmlFolderPaths)
+        {
+          string absoultePath = Path.GetFullPath(path);
+          contentPaths.Add($"\"{absoultePath.Replace("\\", "/")}/**/*.{{uxml,cs}}\"");
+        }
+
+        string newContent = $"content: [{string.Join(", ", contentPaths)}],";
+        string tailwindConfigFileText = File.ReadAllText(Settings.assetsUnityConfigFile);
+        string updatedTailwindConfigFileText = System.Text.RegularExpressions.Regex.Replace(
+          tailwindConfigFileText,
+          @"content: \[.*?\],",
+          newContent
+        );
+
+        File.WriteAllText(Settings.assetsUnityConfigFile, updatedTailwindConfigFileText);
       }
+    }
 
-      List<string> uxmlFolderPaths = PersistentData.LoadPersistentConfig();
+    public static void UpdateTransitionTimingFunction()
+    {
+      string tailwindConfigFileText = File.ReadAllText(Settings.assetsUnityConfigFile);
+      string oldConfigStart = "transitionTimingFunction: {";
+      string oldConfigEnd = "},";
+      string newConfig = @"
+        transitionTimingFunction: {
+          DEFAULT: 'ease-in-out',
+          linear: 'linear',
+          in: 'ease-in',
+          out: 'ease-out',
+          'in-out': 'ease-in-out',
+          'in-sine': 'ease-in-sine',
+          'out-sine': 'ease-out-sine',
+          'in-out-sine': 'ease-in-out-sine',
+          'in-cubic': 'ease-in-cubic',
+          'out-cubic': 'ease-out-cubic',
+          'in-out-cubic': 'ease-in-out-cubic',
+          'in-back': 'ease-in-back',
+          'out-back': 'ease-out-back',
+          'in-out-back': 'ease-in-out-back',
+          'in-bounce': 'ease-in-bounce',
+          'out-bounce': 'ease-out-bounce',
+          'in-out-bounce': 'ease-in-out-bounce',
+        },";
 
-      if (uxmlFolderPaths.Count == 0)
+      int startIndex = tailwindConfigFileText.IndexOf(oldConfigStart);
+      int endIndex = tailwindConfigFileText.IndexOf(oldConfigEnd, startIndex) + oldConfigEnd.Length;
+
+      if (startIndex != -1 && endIndex > startIndex)
       {
-        Logger.LogError("No UXML folders selected.");
-        return;
+        string oldConfig = tailwindConfigFileText.Substring(startIndex, endIndex - startIndex);
+        string updatedTailwindConfigFileText = tailwindConfigFileText.Replace(oldConfig, newConfig);
+
+        File.WriteAllText(Settings.assetsUnityConfigFile, updatedTailwindConfigFileText);
       }
+    }
 
-      List<string> contentPaths = new();
+    public static void UpdateTransitionProperty()
+    {
+      string tailwindConfigFileText = File.ReadAllText(Settings.assetsUnityConfigFile);
+      string oldConfigStart = "transitionProperty: {";
+      string oldConfigEnd = "},";
+      string newConfig = @"
+        transitionProperty: {
+          none: 'none',
+          all: 'all',
+          DEFAULT:
+            'color, background-color, border-color, opacity',
+          colors: 'color, background-color, border-color',
+          opacity: 'opacity',
+          shadow: 'text-shadow',
+        },";
 
-      foreach (var path in uxmlFolderPaths)
+      int startIndex = tailwindConfigFileText.IndexOf(oldConfigStart);
+      int endIndex = tailwindConfigFileText.IndexOf(oldConfigEnd, startIndex) + oldConfigEnd.Length;
+
+      if (startIndex != -1 && endIndex > startIndex)
       {
-        string absoultePath = Path.GetFullPath(path);
-        contentPaths.Add($"\"{absoultePath.Replace("\\", "/")}/**/*.{{uxml,cs}}\"");
+        string oldConfig = tailwindConfigFileText.Substring(startIndex, endIndex - startIndex);
+        string updatedTailwindConfigFileText = tailwindConfigFileText.Replace(oldConfig, newConfig);
+
+        File.WriteAllText(Settings.assetsUnityConfigFile, updatedTailwindConfigFileText);
       }
-
-      string newContent = $"content: [{string.Join(", ", contentPaths)}],";
-      string configContent = File.ReadAllText(Settings.assetsUnityConfigFile);
-      string updatedConfigContent = System.Text.RegularExpressions.Regex.Replace(
-        configContent,
-        @"content: \[.*?\],",
-        newContent
-      );
-
-      File.WriteAllText(Settings.assetsUnityConfigFile, updatedConfigContent);
     }
   }
 }

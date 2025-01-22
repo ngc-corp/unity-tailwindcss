@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 
-namespace NGCCorp.TailwindCSS {
-  public  class UXMLPostprocessor : AssetPostprocessor
+namespace NGCCorp.TailwindCSS
+{
+  public class UXMLPostprocessor : AssetPostprocessor
   {
     private static readonly List<string> monitoredExtensions = new() { ".cs", ".css", ".uxml" };
 
@@ -29,9 +30,9 @@ namespace NGCCorp.TailwindCSS {
     // Retrieves monitored folders from EditorPrefs
     private static List<string> GetMonitoredFolders()
     {
-      if (EditorPrefs.HasKey(Settings.prefsKey))
+      if (EditorPrefs.HasKey(Settings.prefsKeyFolders))
       {
-        string savedPaths = EditorPrefs.GetString(Settings.prefsKey);
+        string savedPaths = EditorPrefs.GetString(Settings.prefsKeyFolders);
         return new List<string>(savedPaths.Split(';'));
       }
       return new List<string>();

@@ -124,6 +124,8 @@ namespace NGCCorp.TailwindCSS
       TailwindConfigBuilder.AddCorePlugins();
       TailwindConfigBuilder.AddPlugins();
       TailwindConfigBuilder.AddSeperator();
+      TailwindConfigBuilder.UpdateTransitionTimingFunction();
+      TailwindConfigBuilder.UpdateTransitionProperty();
       AddRequireTailwindPlugin();
 
       Converter.ConvertRem();
@@ -147,7 +149,7 @@ namespace NGCCorp.TailwindCSS
       Converter.ReplaceRgbCalls();
       AssetDatabase.Refresh();
 
-      Logger.LogInfo("Tailwind CSS build complete!");
+      Logger.ForceLogInfo("Tailwind CSS build complete!");
     }
 
     public static void RunNPMInstall()
@@ -254,7 +256,7 @@ namespace NGCCorp.TailwindCSS
       process.StartInfo.UseShellExecute = false;
 
       process.OutputDataReceived += (sender, args) => Logger.LogInfo(args.Data);
-      process.ErrorDataReceived += (sender, args) => Logger.LogError(args.Data);
+      process.ErrorDataReceived += (sender, args) => Logger.LogInfo(args.Data);
 
       process.Start();
       process.BeginOutputReadLine();

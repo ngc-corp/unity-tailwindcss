@@ -360,7 +360,7 @@ Properties that differ from the default Tailwind behavior are explained in the e
 | transitionDelay          | ✅         |
 | transitionDuration       | ✅         |
 | transitionProperty       | ✅         |
-| transitionTimingFunction | ✅         |
+| transitionTimingFunction | ✅         | `linear`: linear, `in`: ease-in, `out`: ease-out, `in-out`: ease-in-out, `in-sine`: ease-in-sine, `out-sine?`: ease-out-sine, `in-out-sine`: ease-in-out-sine, `in-cubic`: ease-in-cubic, `out-cubic`: ease-out-cubic, `in-out-cubic`: ease-in-out-cubic, `in-back`: ease-in-back, `out-back`: ease-out-back, `in-out-back`: ease-in-out-back, `in-bounce`: ease-in-bounce, `out-bounce`: ease-out-bounce, `in-out-bounce`: ease-in-out-bounce |
 | translate                | ❌         |
 | userSelect               | ❌         |
 | verticalAlign            | ❌         |

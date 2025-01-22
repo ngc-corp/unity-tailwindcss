@@ -2,12 +2,14 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NGCCorp.TailwindCSS
 {
   public class TailwindConfigEditor : EditorWindow
   {
-    private List<string> uxmlFolderPaths = new();
+    private List<string> UxmlFolderPaths = new();
+    private bool Debug = true;
 
     [MenuItem("Tools/Tailwind/Configure Tailwind", validate = true)]
     public static bool ValidateShowWindow()
@@ -25,6 +27,14 @@ namespace NGCCorp.TailwindCSS
 
     private void OnGUI()
     {
+      GUILayout.Label("Configure Tailwind", EditorStyles.boldLabel);
+      Debug = GUILayout.Toggle(Debug, "Show debug output");
+
+      if (GUI.changed)
+      {
+        SavePersistentConfig();
+      }
+
       GUILayout.Label("Configure Tailwind Scanning", EditorStyles.boldLabel);
 
       // Button to select new UXML folder
@@ -34,10 +44,10 @@ namespace NGCCorp.TailwindCSS
 
         if (!string.IsNullOrEmpty(selectedFolder))
         {
-          if (!uxmlFolderPaths.Contains(selectedFolder))
+          if (!UxmlFolderPaths.Contains(selectedFolder))
           {
             string relativeFolderPath = selectedFolder.Replace(Application.dataPath, "Assets");
-            uxmlFolderPaths.Add(relativeFolderPath);
+            UxmlFolderPaths.Add(relativeFolderPath);
             SavePersistentConfig();
           }
         }
@@ -46,14 +56,14 @@ namespace NGCCorp.TailwindCSS
       // Display already chosen UXML folders
       GUILayout.Label("Chosen Folders:", EditorStyles.boldLabel);
 
-      for (int i = 0; i < uxmlFolderPaths.Count; i++)
+      for (int i = 0; i < UxmlFolderPaths.Count; i++)
       {
         GUILayout.BeginHorizontal();
-        GUILayout.Label(uxmlFolderPaths[i]);
+        GUILayout.Label(UxmlFolderPaths[i]);
 
         if (GUILayout.Button("Remove"))
         {
-          uxmlFolderPaths.RemoveAt(i);
+          UxmlFolderPaths.RemoveAt(i);
           SavePersistentConfig();
         }
 
@@ -69,12 +79,28 @@ namespace NGCCorp.TailwindCSS
 
     private void SavePersistentConfig()
     {
-      PersistentData.SavePersistentConfig(uxmlFolderPaths);
+      PersistentData.SavePersistentConfig(Settings.prefsKeyFolders, string.Join(";", UxmlFolderPaths.ToArray()));
+      PersistentData.SavePersistentConfig(Settings.prefsKeyDebug, Debug);
+
+      Settings.showDebug = Debug;
     }
 
     private void LoadPersistentConfig()
     {
-      uxmlFolderPaths = PersistentData.LoadPersistentConfig();
+      string folders = PersistentData.LoadPersistentConfig<string>(Settings.prefsKeyFolders);
+
+      if (!folders.Equals(default))
+      {
+        UxmlFolderPaths = folders.Split(";").ToList();
+      }
+
+      bool debug = PersistentData.LoadPersistentConfig<bool>(Settings.prefsKeyDebug);
+
+      if (!debug.Equals(default))
+      {
+        Settings.showDebug = Debug;
+        Debug = debug;
+      }
     }
 
     private void UpdateTailwindConfig()

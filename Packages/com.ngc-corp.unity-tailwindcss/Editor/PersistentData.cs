@@ -1,25 +1,52 @@
 using UnityEditor;
-using System.Collections.Generic;
 
 namespace NGCCorp.TailwindCSS
 {
   public static class PersistentData
   {
-    public static void SavePersistentConfig(List<string> uxmlFolderPaths)
+    public static void SavePersistentConfig<T>(string key, T value)
     {
-      EditorPrefs.SetString(Settings.prefsKey, string.Join(";", uxmlFolderPaths.ToArray()));
+      if (typeof(T) == typeof(string))
+      {
+        EditorPrefs.SetString(key, value as string);
+      }
+      else if (typeof(T) == typeof(bool))
+      {
+        EditorPrefs.SetBool(key, (bool)(object)value);
+      }
+      else if (typeof(T) == typeof(int))
+      {
+        EditorPrefs.SetInt(key, (int)(object)value);
+      }
+      else
+      {
+        throw new System.NotSupportedException($"Type {typeof(T)} is not supported for persistent config.");
+      }
     }
 
-    public static List<string> LoadPersistentConfig()
+    public static T LoadPersistentConfig<T>(string key)
     {
-      if (EditorPrefs.HasKey(Settings.prefsKey))
+      if (EditorPrefs.HasKey(key))
       {
-        string savedPaths = EditorPrefs.GetString(Settings.prefsKey);
-
-        return new List<string>(savedPaths.Split(';'));
+        if (typeof(T) == typeof(string))
+        {
+          return (T)(object)EditorPrefs.GetString(key);
+        }
+        else if (typeof(T) == typeof(bool))
+        {
+          return (T)(object)EditorPrefs.GetBool(key);
+        }
+        else if (typeof(T) == typeof(int))
+        {
+          return (T)(object)EditorPrefs.GetInt(key);
+        }
+        else
+        {
+          throw new System.NotSupportedException($"Type {typeof(T)} is not supported for persistent config.");
+        }
       }
 
-      return null;
+      return default;
     }
   }
 }

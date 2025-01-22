@@ -8,22 +8,38 @@ namespace NGCCorp.TailwindCSS
     // Log Info level message
     public static void LogInfo(string message)
     {
-      string logMessage = FormatMessage(message);
-      UnityEngine.Debug.Log(logMessage);
+      if (Settings.showDebug)
+      {
+        string logMessage = FormatMessage(message);
+        UnityEngine.Debug.Log(logMessage);
+      }
     }
 
     // Log Warning level message
     public static void LogWarning(string message)
     {
-      string logMessage = FormatMessage(message);
-      UnityEngine.Debug.LogWarning(logMessage);
+      if (Settings.showDebug)
+      {
+        string logMessage = FormatMessage(message);
+        UnityEngine.Debug.LogWarning(logMessage);
+      }
     }
 
     // Log Error level message
     public static void LogError(string message)
     {
+      if (Settings.showDebug)
+      {
+        string logMessage = FormatMessage(message);
+        UnityEngine.Debug.LogError(logMessage);
+      }
+    }
+
+    // Log Info level message and ignore debug settings
+    public static void ForceLogInfo(string message)
+    {
       string logMessage = FormatMessage(message);
-      UnityEngine.Debug.LogError(logMessage);
+      UnityEngine.Debug.Log(logMessage);
     }
 
     // Helper method to format the log message

@@ -360,7 +360,7 @@ Properties that differ from the default Tailwind behavior are explained in the e
 | transitionDelay          | ✅         |
 | transitionDuration       | ✅         |
 | transitionProperty       | ✅         |
-| transitionTimingFunction | ✅         | `ease-linear`: linear, `ease-in`: ease-in, `ease-out`: ease-out, `ease-in-out`: ease-in-out, `ease-in-sine`: ease-in-sine, `ease-out-sine`: ease-out-sine, `ease-in-out-sine`: ease-in-out-sine, `ease-in-cubic`: ease-in-cubic, `ease-out-cubic`: ease-out-cubic, `ease-in-out-cubic`: ease-in-out-cubic, `ease-in-back`: ease-in-back, `ease-out-back`: ease-out-back, `ease-in-out-back`: ease-in-out-back, `ease-in-bounce`: ease-in-bounce, `ease-out-bounce`: ease-out-bounce, `ease-in-out-bounce`: ease-in-out-bounce |
+| transitionTimingFunction | ✅         | `ease-linear`, `ease-in`, `ease-out`, `ease-in-out`, `ease-in-sine`, `ease-out-sine`, `ease-in-out-sine`, `ease-in-cubic`, `ease-out-cubic`, `ease-in-out-cubic`, `ease-in-back`, `ease-out-back`, `ease-in-out-back`, `ease-in-bounce`, `ease-out-bounce`, `ease-in-out-bounce` |
 | translate                | ❌         |
 | userSelect               | ❌         |
 | verticalAlign            | ❌         |
